@@ -1,0 +1,3 @@
+baseURL = 'https://nacefguessaymi.com/'
+locale = 'en'
+theme = "blowfish"

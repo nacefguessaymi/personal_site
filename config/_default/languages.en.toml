@@ -1,0 +1,10 @@
+title = "My personal site"
+
+[params.author]
+name = "Nacef Guessaymi"
+image = "img/nacef.jpg"
+headline = "PhD Candidate"
+bio = "Computational Biophysics Researcher"
+links = [
+  { github = "https://github.com/nacefguessaymi" }
+]
