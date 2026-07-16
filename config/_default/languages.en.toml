@@ -1,10 +1,13 @@
-title = "My personal site"
+title = "Nacef Guessaymi"
 
 [params.author]
 name = "Nacef Guessaymi"
 image = "img/nacef.jpg"
-headline = "PhD Candidate"
+headline = "PhD Candidate in [Molecular Biophysics and Structural Biology](https://www.mbsb.pitt.edu/) @ [Durrant Lab](https://durrantlab.pitt.edu/)"
 bio = "Computational Biophysics Researcher"
 links = [
-  { github = "https://github.com/nacefguessaymi" }
+  { linkedin = "https://www.linkedin.com/in/nacef-guessaymi-b4291295"},
+  { github = "https://github.com/nacefguessaymi" },
+  { google-scholar = "https://scholar.google.com/citations?user=6fcKKiUAAAAJ&hl=en"},
+  { twitter = "https://x.com/NGuessaymi"},
 ]

@@ -1,4 +1,5 @@
 colorScheme = "blowfish"
+disableTextInHeader = true
 
 [homepage]
 layout = "profile"
