@@ -6,3 +6,12 @@
   HUGO_VERSION = "0.164.0"
   HUGO_ENABLEGIT = "true"
   GO_VERSION = "1.21"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[dev]
+  command = "hugo server -w --port 1313"
+  targetPort = 1313
+  publish = "public"

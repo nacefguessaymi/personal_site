@@ -1,5 +1,10 @@
 colorScheme = "blowfish"
 disableTextInHeader = true
+logo = "img/logo.svg"
+secondaryLogo = "img/logo-dark.svg"
 
 [homepage]
 layout = "profile"
+
+[article]
+showWordCount = false

@@ -1,0 +1,141 @@
+{{- /*
+  Shortcode: sankey
+  Renders the application-pipeline Sankey by fetching your Netlify function,
+  which reads the Google Sheet server-side. No sheet ID or link ships to the
+  browser.
+
+  Usage in a content page:
+    {{< sankey >}}
+    {{< sankey endpoint="/api/pipeline" >}}   (if you add the netlify.toml redirect)
+
+  Note: one instance per page (fixed element IDs + loads the charts lib).
+*/ -}}
+{{- $endpoint := .Get "endpoint" | default "/.netlify/functions/pipeline" -}}
+
+<div class="sankey-embed">
+  <div class="panel">
+    <div id="sk-msg" class="msg"></div>
+    <div id="sk-chart" class="chart"></div>
+    <div class="tally" id="sk-tally">
+      <div><span>Flows</span><strong id="sk-t-links">0</strong></div>
+      <div><span>Stages</span><strong id="sk-t-nodes">0</strong></div>
+      <div><span>Total</span><strong id="sk-t-total">0</strong></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sankey-embed {
+    --sk-ink: #1c1c1a; --sk-soft: #5f5e5a; --sk-faint: #97958d;
+    --sk-rule: #e2e0d8; --sk-paper: #fbfaf7; --sk-accent: #0f6e56;
+    max-width: 960px; margin: 1.75rem auto;
+  }
+  /* Dark mode: light text + subtler rules so nothing gets swallowed */
+  html.dark .sankey-embed {
+    --sk-ink: #e8e6df; --sk-soft: #b8b6ad; --sk-faint: #8f8d85;
+    --sk-rule: rgba(255, 255, 255, 0.14);
+  }
+  /* Transparent panel that blends into the page in either theme */
+  .sankey-embed .panel {
+    background: transparent; color: var(--sk-ink);
+    border: 1px solid var(--sk-rule); border-radius: 8px;
+    padding: 18px 18px 6px;
+  }
+  .sankey-embed .chart { width: 100%; height: 480px; }
+  .sankey-embed .msg {
+    display: none; margin: 4px 4px 12px; padding: 12px 14px; border-radius: 4px;
+    font: 400 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .sankey-embed .msg.err { display: block; background: #fceaea; color: #7c1f1f; }
+  .sankey-embed .msg.ok  { display: block; background: #e6f2ed; color: #0d5744; }
+  .sankey-embed .tally {
+    display: none; gap: 28px; flex-wrap: wrap;
+    padding: 14px 4px 8px; margin-top: 10px; border-top: 1px solid var(--sk-rule);
+  }
+  .sankey-embed .tally.on { display: flex; }
+  .sankey-embed .tally div span {
+    display: block; margin-bottom: 6px;
+    font: 400 11px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: var(--sk-faint); text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .sankey-embed .tally div strong { font-size: 22px; font-weight: 500; color: var(--sk-ink); }
+</style>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+(function () {
+  var ENDPOINT = "{{ $endpoint }}";
+  var PALETTE = ['#888780','#1D9E75','#EF9F27','#378ADD','#D4537E','#639922','#E24B4A','#534AB7'];
+  var lastData = null;
+
+  google.charts.load('current', {packages: ['sankey']});
+  google.charts.setOnLoadCallback(load);
+
+  function say(text, kind) {
+    var el = document.getElementById('sk-msg');
+    el.textContent = text || '';
+    el.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function isDark() {
+    return document.documentElement.classList.contains('dark');
+  }
+
+  function render(data) {
+    var labelColor = isDark() ? '#e8e6df' : '#1c1c1a';
+    new google.visualization.Sankey(document.getElementById('sk-chart')).draw(data, {
+      height: 460,
+      sankey: {
+        iterations: 64,
+        node: {
+          colors: PALETTE, width: 14, nodePadding: 26,
+          label: {fontName: 'Helvetica', fontSize: 13, color: labelColor}
+        },
+        link: {colorMode: 'gradient', colors: PALETTE, color: {fillOpacity: 0.45}}
+      }
+    });
+  }
+
+  function load() {
+    fetch(ENDPOINT, {headers: {'Accept': 'application/json'}})
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (payload) {
+        var flows = payload && payload.flows;
+        if (!flows || !flows.length) { say('No pipeline data yet.', 'err'); return; }
+
+        var rows = [['From', 'To', 'Weight']];
+        var nodes = {}, total = 0;
+        flows.forEach(function (f) {
+          rows.push([String(f[0]), String(f[1]), Number(f[2])]);
+          nodes[f[0]] = 1; nodes[f[1]] = 1;
+          total += Number(f[2]) || 0;
+        });
+
+        var data = google.visualization.arrayToDataTable(rows);
+        document.getElementById('sk-t-links').textContent = flows.length;
+        document.getElementById('sk-t-nodes').textContent = Object.keys(nodes).length;
+        document.getElementById('sk-t-total').textContent = Math.round(total);
+        document.getElementById('sk-tally').className = 'tally on';
+
+        say('', '');
+        lastData = data;
+        render(data);
+      })
+      .catch(function () { say('Could not load the pipeline right now.', 'err'); });
+  }
+
+  // Redraw on resize so the diagram stays responsive
+  var t;
+  window.addEventListener('resize', function () {
+    clearTimeout(t);
+    t = setTimeout(function () { if (lastData) render(lastData); }, 200);
+  });
+
+  // Redraw when the site's light/dark theme toggles, to re-color the labels
+  var lastDark = isDark();
+  new MutationObserver(function () {
+    var now = isDark();
+    if (now !== lastDark) { lastDark = now; if (lastData) render(lastData); }
+  }).observe(document.documentElement, {attributes: true, attributeFilter: ['class']});
+})();
+</script>
