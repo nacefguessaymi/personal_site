@@ -103,7 +103,7 @@
         var flows = payload && payload.flows;
         if (!flows || !flows.length) { say('No pipeline data yet.', 'err'); return; }
 
-        var rows = [['From', 'To', 'Weight']];
+        var rows = [['From', 'To', 'Number']];
         var nodes = {}, total = 0;
         flows.forEach(function (f) {
           rows.push([String(f[0]), String(f[1]), Number(f[2])]);
