@@ -32,11 +32,13 @@ fi
 # Compile both CVs. --root lets the compiler resolve local imports.
 echo "Compiling academic CV..."
 bin/typst compile --root external/resume \
+	--font-path external/resume/fonts \
 	external/resume/rendercv/main.typ \
 	static/files/cv.pdf
 
 echo "Compiling industry resume..."
 bin/typst compile --root external/resume \
+	--font-path external/resume/fonts \
 	external/resume/basic-resume/main.typ \
 	static/files/resume.pdf
 
