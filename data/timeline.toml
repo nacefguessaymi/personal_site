@@ -1,0 +1,136 @@
+# Timeline data — consumed by layouts/shortcodes/timeline.html
+# Entries render top-to-bottom in the order listed here.
+# Edit freely: add/remove [[entry]] blocks, fill in real milestones.
+# `tag` is optional (a small label like "Education" / "Research" / "Life").
+
+[[entry]]
+year = "Present"
+title = "Now"
+place = "Pittsburgh, PA"
+tag = " "
+body = "Currently I am working on wrapping up my research to defend my thesis. I am on the job hunt for Quantitative Researcher roles."
+
+[[entry]]
+year = "2026"
+title = "Admission to Candicay"
+place = "Pittsburgh, PA"
+tag = "Research"
+body = "I proposed my thesis work to my comittee and was admitted to candidacy."
+
+[[entry]]
+year = "2024"
+title = "Moved to the Durrant Lab"
+place = "Pittsburgh, PA"
+tag = "Research"
+body = "After some time in the Chamanzar lab, I realized our research interests did not align. I wanted focus on computational modeling of biophysical systems (similar to my comprehensive exam proposal). I moved on to the <a href='https://durrantlab.pitt.edu/'>Durrant Lab.</a> My research focus was on computational drug design targeting functional amyloids and molecular dynamics simulations of these amyloids. We collaborate strongly with the <a href='https://akbey.structbio.pitt.edu/'>Akbey Lab</a> where I rotated previously."
+
+
+[[entry]]
+year = "2023"
+title = "Passed My Comprehensive Exam"
+place = "Pittsburgh, PA"
+tag = "Research"
+body = "My program requires us to propose a project unrelated to our research work in the format of an F31 research proposal. I defended this work in front of my comprehensive exam committee."
+
+[[entry]]
+year = "2023"
+title = "Began Rowing Again"
+place = "Pittsburgh, PA"
+tag = "Sports"
+body = "I joined the <a href='https://tartancrew.wixsite.com/tartancrew'>Carnegie Mellon Rowing Team.</a> I raced in a couple of regattas. Usually sat bowseat again!"
+
+[[entry]]
+year = "2022"
+title = "Came back to Grad School"
+place = "Pittsburgh, PA"
+tag = "Research"
+body = "After some time working, it was time to come back to my program. After Dr. Dahl decided to move on to other ventures, I needed to a find a new lab and I ultimately joined the <a href='https://www.chamanzarlab.com/'>Chamanzar Lab</a> in the Electrical Engineering Department at CMU. I worked on Optogenetic Stimulation using minimally invasive neural probes."
+
+[[entry]]
+year = "2021"
+title = "Began Working for Pharma"
+place = "Gaithersburg, MD"
+tag = "Research"
+body = "Due to the COVID pandemic, I took a leave from my program and began working as a Bioassay Development Scientist II for a pharmaceutical company. I was contracted out by <a href='https://www.eurofins.com/en/biopharma-services/eurofins-professional-scientific-services-insourcing-solutions/'>Eurofins PSS</a> to a major pharmaceutical company in Gaithersburg where I worked on RSV immunologics, their COVID platform, and some cancer therapeutics."
+
+[[entry]]
+year = "2019"
+title = "Early Research Work"
+place = "Pittsburgh, PA"
+tag = "Research"
+body = "I started working in the <a href='http://dahl.cheme.cmu.edu/'>Dahl Lab</a> in the Chemical Engineering Department at CMU. My early work was focused on the rheobiology of neural pluripotent starfish stem cells."
+
+
+[[entry]]
+year = "2018"
+title = "Started Graduate School"
+place = "Pittsburgh, PA"
+tag = "Education"
+body = "Began my PhD in <a href='https://www.mbsb.pitt.edu/'>Molecular Biophysics and Structural Biology at the University of Pittsburgh/Carnegie Mellon University</a>. Fun fact: At the time, our first year we were assigned randomly a school until we joined our labs. I was the University of Pittsburgh School of Medicine student. Our degree ultimately comes from the host University of the lab we pick."
+
+
+[[entry]]
+year = "2017"
+title = "Graduated College"
+place = "Philadelphia, PA"
+tag = "Education"
+body = "Completed my Bachelor's of Science in Biophysics at Temple University. My last two years were concentrated in the Physics department where I was taught by <a href='https://cst.temple.edu/directory/tsvetelin-tsankov'>Dr. Tsankov, </a> <a href='https://cst.temple.edu/directory/theodore-burkhardt'>Dr. Burkhardt, </a> <a href='https://cst.temple.edu/directory/adrienn-ruzsinszky'>Dr. Ruzsinszky, </a>  <a href='https://cst.temple.edu/directory/matthew-newby'>Dr. Newby, </a> and <a href='https://cst.temple.edu/directory/nikos-sparveris'>Dr. Sparveris</a> to name a few."
+
+[[entry]]
+year = "2015"
+title = "Began My Research Career"
+place = "Philadelphia, PA"
+tag = "Research"
+body = 'Started working as an undergraduate researcher at the <a href="https://yanglab.com/">Yang Lab.</a> My focus was on imaging and modeling the selective barrier of the nuclear pore complex.'
+
+[[entry]]
+year = "2013"
+title = "Started College"
+place = "Philadelphia, PA"
+tag = "Education"
+body = "Began my college education at Temple University. Fun fact: I switched from a major in Biochemistry to Biophysics in the first day."
+
+[[entry]]
+year = "2013"
+title = "Graduated High School"
+place = "Philadelphia, PA"
+tag = "Education"
+body = "Received my High School degree from the Academy at Palumbo. Won the Social Studies award at graduation."
+
+[[entry]]
+year = "2013"
+title = "Winner of the Math March Madness Competition"
+place = "Philadelphia, PA"
+tag = "Award"
+body = "My friends and I competed in a local math competition where we won first place."
+
+[[entry]]
+year = "2012"
+title = "Started Rowing"
+place = "Philadelphia, PA"
+tag = "Sports"
+body = "Began rowing competitively for <a href='https://philadelphiacityrowing.org/'>Philadelphia City Rowing.</a> I raced in a couple of regattas. I was usually bowseat."
+
+[[entry]]
+year = "2009"
+title = "Started High School"
+place = "Philadelphia, PA"
+tag = "Education"
+body = "Began my high school education at the <a href='https://palumbo.philasd.org/'>Academy at Palumbo</a> in Philadelphia."
+
+
+[[entry]]
+year = "2003"
+title = "Move"
+place = "Philadelphia, PA"
+tag = "Transition"
+body = "We moved from Montréal to Philadelphia."
+
+
+[[entry]]
+year = "1995"
+title = "Begining"
+place = "Montréal, QC"
+tag = "Life Event"
+body = "All good things must come to a start!"
+

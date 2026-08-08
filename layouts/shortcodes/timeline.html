@@ -1,0 +1,170 @@
+<style>
+.tl{
+  --tl-card:#f8fafc; --tl-border:#e2e8f0; --tl-text:#0f172a;
+  --tl-muted:#64748b; --tl-primary:#2563eb; --tl-accent:#06b6d4;
+  --tl-spine:#e2e8f0;
+  max-width:56rem; margin:0 auto;
+}
+html.dark .tl{
+  --tl-card:#1e293b; --tl-border:#334155; --tl-text:#f1f5f9;
+  --tl-muted:#94a3b8; --tl-primary:#60a5fa; --tl-accent:#22d3ee;
+  --tl-spine:#334155;
+}
+.tl-grid{display:grid; grid-template-columns:11rem 1fr; gap:2rem; align-items:start;}
+.tl-aside{position:sticky; top:6rem; align-self:start;}
+.tl-marker-year{
+  font-size:2.6rem; font-weight:800; letter-spacing:-.02em; line-height:1;
+  color:var(--tl-primary); font-variant-numeric:tabular-nums;
+  transition:color .3s ease;
+}
+.tl-marker-tag{
+  display:inline-block; margin-top:.6rem; font-size:.72rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--tl-accent);
+}
+.tl-progress{margin-top:1.1rem; height:3px; background:var(--tl-spine); border-radius:2px; overflow:hidden;}
+.tl-progress-fill{height:100%; width:0; background:var(--tl-primary); transition:width .3s ease;}
+.tl-track{position:relative; padding-left:1.75rem;}
+.tl-track::before{
+  content:""; position:absolute; left:5px; top:.4rem; bottom:.4rem;
+  width:2px; background:var(--tl-spine);
+}
+.tl-entry{position:relative; margin:0 0 1.75rem; opacity:.55; transition:opacity .35s ease, transform .35s ease;}
+.tl-entry:last-child{margin-bottom:0;}
+.tl-entry.tl-active{opacity:1;}
+.tl-entry::before{
+  content:""; position:absolute; left:-1.75rem; top:.55rem;
+  width:12px; height:12px; border-radius:50%;
+  background:var(--tl-card); border:2px solid var(--tl-spine);
+  transform:translateX(0); transition:border-color .35s ease, background .35s ease, transform .35s ease;
+}
+.tl-entry.tl-active::before{border-color:var(--tl-primary); background:var(--tl-primary); transform:scale(1.25);}
+.tl-card{
+  background:var(--tl-card); border:1px solid var(--tl-border);
+  border-radius:14px; padding:1.15rem 1.3rem;
+  transition:border-color .35s ease, box-shadow .35s ease;
+}
+.tl-entry.tl-active .tl-card{border-color:var(--tl-primary); box-shadow:0 10px 28px -18px color-mix(in srgb, var(--tl-primary) 60%, transparent);}
+.tl-year-inline{
+  display:none; font-size:.85rem; font-weight:700; color:var(--tl-primary);
+  font-variant-numeric:tabular-nums; margin-bottom:.25rem;
+}
+.tl-title{font-size:1.1rem; font-weight:700; line-height:1.35; color:var(--tl-text); margin:0 0 .2rem;}
+.tl-place{font-size:.85rem; color:var(--tl-muted); margin:0 0 .6rem;}
+.tl-body{font-size:.92rem; line-height:1.65; color:var(--tl-text); margin:0;}
+.tl-blurb{font-size:1.05rem; line-height:1.7; color:var(--tl-text); max-width:42rem; margin:0 0 3rem;}
+@media (max-width:720px){
+  .tl-grid{grid-template-columns:1fr; gap:0;}
+  .tl-aside{display:none;}
+  .tl-year-inline{display:block;}
+  .tl-entry{opacity:1;}
+}
+@media (prefers-reduced-motion:reduce){
+  .tl-entry, .tl-card, .tl-entry::before, .tl-marker-year, .tl-progress-fill{transition:none;}
+  .tl-entry{opacity:1;}
+}
+</style>
+
+<div class="tl">
+
+  <p class="tl-blurb">{{ .Get "blurb" | default "Write a short blurb here — a few sentences on who you are and what you care about. Pass it to the shortcode with the `blurb` parameter, or edit this default." }}</p>
+
+  <div class="tl-grid">
+    <aside class="tl-aside" aria-hidden="true">
+      <div class="tl-marker-year" id="tl-marker-year">{{ with index .Site.Data.timeline.entry 0 }}{{ .year }}{{ end }}</div>
+      <div class="tl-marker-tag" id="tl-marker-tag">{{ with index .Site.Data.timeline.entry 0 }}{{ .tag }}{{ end }}</div>
+      <div class="tl-progress"><div class="tl-progress-fill" id="tl-progress-fill"></div></div>
+    </aside>
+
+    <div class="tl-track">
+      {{ range $i, $e := .Site.Data.timeline.entry }}
+      <div class="tl-entry{{ if eq $i 0 }} tl-active{{ end }}" data-year="{{ $e.year }}" data-tag="{{ $e.tag }}" data-index="{{ $i }}">
+        <div class="tl-card">
+          <div class="tl-year-inline">{{ $e.year }}{{ with $e.tag }} · {{ . }}{{ end }}</div>
+          <h3 class="tl-title">{{ $e.title }}</h3>
+          {{ with $e.place }}<p class="tl-place">{{ . }}</p>{{ end }}
+          <p class="tl-body">{{ $e.body | safeHTML }}</p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var root = document.querySelector('.tl');
+  if(!root) return;
+  var track = root.querySelector('.tl-track');
+  var entries = Array.prototype.slice.call(root.querySelectorAll('.tl-entry'));
+  var yearEl = root.querySelector('#tl-marker-year');
+  var tagEl  = root.querySelector('#tl-marker-tag');
+  var fillEl = root.querySelector('#tl-progress-fill');
+  if(!entries.length) return;
+
+  var total = entries.length;
+  var current = -1;
+  var LINE_FRAC = 0.42;
+
+  function apply(idx){
+    if(idx === current) return;
+    current = idx;
+    entries.forEach(function(el, i){ el.classList.toggle('tl-active', i === idx); });
+    var el = entries[idx];
+    if(yearEl) yearEl.textContent = el.getAttribute('data-year') || '';
+    if(tagEl)  tagEl.textContent  = el.getAttribute('data-tag') || '';
+    if(fillEl) fillEl.style.width = (((idx + 1) / total) * 100) + '%';
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){
+    entries.forEach(function(el){ el.classList.add('tl-active'); });
+    if(fillEl) fillEl.style.width = '100%';
+    return;
+  }
+
+  // KEY FIX: add scroll runway below the last entry so it can rise to the
+  // trigger line instead of being stranded at the bottom of the page.
+  // Runway = distance from the last entry's midpoint to the trigger line
+  // when scrolled as far as the entry naturally allows.
+  function setRunway(){
+    if(track) track.style.paddingBottom = '0px'; // reset before measuring
+    var last = entries[total - 1].getBoundingClientRect();
+    var vh = window.innerHeight;
+    var line = vh * LINE_FRAC;
+    // We want the last entry's TOP to be able to reach `line`. The extra
+    // space needed is: how far below `line` the last entry's top sits when
+    // the page is fully scrolled, plus a small margin.
+    var pageScrollable = document.documentElement.scrollHeight - vh;
+    var lastTopAtMaxScroll = last.top - (pageScrollable - window.scrollY);
+    var needed = lastTopAtMaxScroll - line;
+    if(track && needed > 0) track.style.paddingBottom = Math.ceil(needed + 24) + 'px';
+  }
+
+  var ticking = false;
+  function update(){
+    ticking = false;
+    var line = window.innerHeight * LINE_FRAC;
+    var idx = 0;
+    for(var i = 0; i < total; i++){
+      var top = entries[i].getBoundingClientRect().top;
+      if(top <= line){ idx = i; }
+      else break;
+    }
+    // Safety net only: if somehow at the very bottom and logic lags, snap.
+    var scrollBottom = window.innerHeight + window.scrollY;
+    if(scrollBottom >= document.documentElement.scrollHeight - 2) idx = total - 1;
+    apply(idx);
+  }
+
+  function onScroll(){
+    if(!ticking){ ticking = true; window.requestAnimationFrame(update); }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function(){ setRunway(); onScroll(); }, { passive: true });
+
+  setRunway();
+  update();
+})();
+</script>

@@ -13,3 +13,8 @@
   pageRef = "publications"
   weight = 10
 
+[[main]]
+  name = "About Me"
+  pageRef = "about"
+  weight = 40
+
