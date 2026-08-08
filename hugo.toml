@@ -1,3 +1,6 @@
 baseURL = 'https://nacefguessaymi.com/'
 locale = 'en'
 theme = "blowfish"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]

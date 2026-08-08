@@ -12,7 +12,7 @@ body = "Currently I am working on wrapping up my research to defend my thesis. I
 
 [[entry]]
 year = "2026"
-title = "Admission to Candicay"
+title = "Admission to Candidacy"
 place = "Pittsburgh, PA"
 tag = "Research"
 body = "I proposed my thesis work to my comittee and was admitted to candidacy."
@@ -22,7 +22,7 @@ year = "2024"
 title = "Moved to the Durrant Lab"
 place = "Pittsburgh, PA"
 tag = "Research"
-body = "After some time in the Chamanzar lab, I realized our research interests did not align. I wanted focus on computational modeling of biophysical systems (similar to my comprehensive exam proposal). I moved on to the <a href='https://durrantlab.pitt.edu/'>Durrant Lab.</a> My research focus was on computational drug design targeting functional amyloids and molecular dynamics simulations of these amyloids. We collaborate strongly with the <a href='https://akbey.structbio.pitt.edu/'>Akbey Lab</a> where I rotated previously."
+body = "After some time in the Chamanzar lab, I realized our research interests did not align. I wanted to focus on computational modeling of biophysical systems (similar to my comprehensive exam proposal). I moved on to the <a href='https://durrantlab.pitt.edu/'>Durrant Lab.</a> My research focus is on computational drug design targeting functional amyloids and molecular dynamics simulations of these amyloids. We collaborate strongly with the <a href='https://akbey.structbio.pitt.edu/'>Akbey Lab</a>, where I rotated previously."
 
 
 [[entry]]
@@ -129,7 +129,7 @@ body = "We moved from Montréal to Philadelphia."
 
 [[entry]]
 year = "1995"
-title = "Begining"
+title = "Beginning"
 place = "Montréal, QC"
 tag = "Life Event"
 body = "All good things must come to a start!"

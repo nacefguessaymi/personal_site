@@ -72,6 +72,11 @@ html.dark .cyf{
   .cyf-card, .cyf-btn{transition:none;}
   .cyf-card:hover, .cyf-card:focus-within{transform:none;}
 }
+.cyf-mobile-only{display:none;}
+@media (hover: none), (max-width: 720px){
+  .cyf-desktop-only{display:none;}
+  .cyf-mobile-only{display:inline-flex;}
+}
 </style>
 
 <div class="cyf">
@@ -109,8 +114,9 @@ html.dark .cyf{
       </ul>
 
       <div class="cyf-actions">
-        <a class="cyf-btn cyf-btn--solid" href="/files/resume.pdf" target="_blank" rel="noopener">View résumé</a>
-        <a class="cyf-btn cyf-btn--ghost" href="/files/resume.pdf" download="Nacef-Guessaymi-Resume.pdf">Download</a>
+        <a class="cyf-btn cyf-btn--solid cyf-desktop-only" href="/files/resume.pdf" target="_blank" rel="noopener">View résumé</a>
+        <a class="cyf-btn cyf-btn--ghost cyf-desktop-only" href="/files/resume.pdf" download="Nacef-Guessaymi-Resume.pdf">Download</a>
+        <a class="cyf-btn cyf-btn--solid cyf-mobile-only" href="/files/resume.pdf" target="_blank" rel="noopener">View PDF</a>
       </div>
     </article>
     
@@ -146,8 +152,9 @@ html.dark .cyf{
       </ul>
 
       <div class="cyf-actions">
-        <a class="cyf-btn cyf-btn--solid" href="/files/cv.pdf" target="_blank" rel="noopener">View CV</a>
-        <a class="cyf-btn cyf-btn--ghost" href="/files/cv.pdf" download="Nacef-Guessaymi-CV.pdf">Download</a>
+        <a class="cyf-btn cyf-btn--solid cyf-desktop-only" href="/files/cv.pdf" target="_blank" rel="noopener">View CV</a>
+        <a class="cyf-btn cyf-btn--ghost cyf-desktop-only" href="/files/cv.pdf" download="Nacef-Guessaymi-CV.pdf">Download</a>
+        <a class="cyf-btn cyf-btn--solid cyf-mobile-only" href="/files/cv.pdf" target="_blank" rel="noopener">View PDF</a>
       </div>
     </article>
 
