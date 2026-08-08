@@ -1,5 +1,5 @@
 [build]
-  command = "chmod +x build.sh && ./build.sh"
+  command = "chmod +x build-resumes.sh && ./build-resumes.sh"
   publish = "public"
 
 [build.environment]
