@@ -2,6 +2,7 @@
 set -euo pipefail
 
 TYPST_VERSION="v0.15.1"
+FA_VERSION="7.3.1"
 mkdir -p bin static/files
 
 # Install Typst (cached across builds if present)
@@ -12,13 +13,19 @@ if [ ! -f bin/typst ]; then
 fi
 
 # Download Font Awesome desktop OTFs (Netlify's container does not have FontAwesome installed).
-FA_VERSION="7.3.1"
 if [ ! -d external/resume/fonts ]; then
+	FA_VERSION="7.3.1"
 	echo "Downloading Font Awesome ${FA_VERSION}..."
 	curl -fsSL "https://github.com/FortAwesome/Font-Awesome/releases/download/${FA_VERSION}/fontawesome-free-${FA_VERSION}-desktop.zip" -o fa.zip
-	mkdir -p external/resume/fonts
 	unzip -q fa.zip
-	cp "fontawesome-free-${FA_VERSION}-desktop/otfs/"*.otf external/resume/fonts/
+	echo "=== unzip contents ==="
+	ls -la
+	echo "=== looking for otfs ==="
+	find . -iname "*.otf" -path "*fontawesome*"
+	mkdir -p external/resume/fonts
+	find . -iname "*.otf" -path "*ontawesome*" -exec cp {} external/resume/fonts/ \;
+	echo "=== fonts dir after copy ==="
+	ls -la external/resume/fonts/
 	rm -rf fa.zip "fontawesome-free-${FA_VERSION}-desktop"
 fi
 
