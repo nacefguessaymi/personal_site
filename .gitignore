@@ -4,4 +4,10 @@ public/
 # Local Netlify folder
 .netlify
 .env
+
+# store
 .DS_Store
+
+#static files
+/static/files/*.pdf
+/bin/

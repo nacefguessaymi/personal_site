@@ -1,0 +1,157 @@
+
+<style>
+.cyf{
+  --cyf-card:#f8fafc; --cyf-border:#e2e8f0; --cyf-text:#0f172a;
+  --cyf-muted:#64748b; --cyf-primary:#2563eb; --cyf-accent:#06b6d4;
+  --cyf-track:#e2e8f0; --cyf-on-primary:#ffffff;
+  max-width:60rem; margin:0 auto;
+}
+html.dark .cyf{
+  --cyf-card:#1e293b; --cyf-border:#334155; --cyf-text:#f1f5f9;
+  --cyf-muted:#94a3b8; --cyf-primary:#60a5fa; --cyf-accent:#22d3ee;
+  --cyf-track:#334155; --cyf-on-primary:#0b1220;
+}
+.cyf-sub{color:var(--cyf-muted); font-size:1.02rem; line-height:1.55; margin:.25rem 0 1.75rem; max-width:42rem;}
+.cyf-arena{display:grid; grid-template-columns:1fr auto 1fr; gap:clamp(1rem,3vw,2.25rem); align-items:stretch;}
+.cyf-card{
+  display:flex; flex-direction:column; background:var(--cyf-card);
+  border:1px solid var(--cyf-border); border-radius:16px; padding:1.5rem 1.5rem 1.35rem;
+  transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  animation:cyf-rise .5s ease both;
+}
+.cyf-card:nth-of-type(2){animation-delay:.08s;}
+.cyf-card:hover, .cyf-card:focus-within{
+  transform:translateY(-4px); border-color:var(--cyf-primary);
+  box-shadow:0 14px 32px -14px color-mix(in srgb, var(--cyf-primary) 55%, transparent);
+}
+.cyf-tag{
+  align-self:flex-start; font-size:.7rem; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--cyf-primary);
+  border:1px solid var(--cyf-primary); border-radius:999px; padding:.2rem .6rem; margin-bottom:.85rem;
+}
+.cyf-name{font-size:1.5rem; font-weight:800; letter-spacing:-.01em; color:var(--cyf-text); margin:0 0 .5rem;}
+.cyf-aud{color:var(--cyf-muted); font-size:.92rem; line-height:1.5; margin:0 0 1.15rem;}
+.cyf-stats{display:flex; flex-direction:column; gap:.55rem; margin:0 0 1.2rem;}
+.cyf-stat{display:grid; grid-template-columns:5.5rem 1fr; align-items:center; gap:.7rem;}
+.cyf-stat-label{font-size:.78rem; font-weight:600; color:var(--cyf-text); letter-spacing:.01em;}
+.cyf-pips{display:flex; gap:4px;}
+.cyf-pips i{flex:1; height:7px; border-radius:4px; background:var(--cyf-track);}
+.cyf-pips i.on{background:var(--cyf-primary);}
+.cyf-pips i.on.tip{background:var(--cyf-accent);}
+.cyf-inside{list-style:none; padding:0; margin:0 0 1.35rem; display:flex; flex-direction:column; gap:.4rem;}
+.cyf-inside li{position:relative; padding-left:1.15rem; font-size:.88rem; color:var(--cyf-text); line-height:1.45;}
+.cyf-inside li::before{content:""; position:absolute; left:0; top:.5em; width:6px; height:6px; border-radius:50%; background:var(--cyf-accent);}
+.cyf-actions{display:flex; gap:.6rem; margin-top:auto;}
+.cyf-btn{
+  flex:1; display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  padding:.65rem .5rem; border-radius:10px; font-size:.9rem; font-weight:600;
+  text-decoration:none; border:1px solid var(--cyf-primary); transition:background .15s ease, color .15s ease, transform .1s ease;
+}
+.cyf-btn:active{transform:scale(.98);}
+.cyf-btn--solid{background:var(--cyf-primary); color:var(--cyf-on-primary);}
+.cyf-btn--solid:hover{background:color-mix(in srgb, var(--cyf-primary) 82%, black);}
+.cyf-btn--ghost{background:transparent; color:var(--cyf-primary);}
+.cyf-btn--ghost:hover{background:color-mix(in srgb, var(--cyf-primary) 12%, transparent);}
+.cyf-btn:focus-visible{outline:2px solid var(--cyf-primary); outline-offset:2px;}
+.cyf-vs{display:flex; align-items:center; justify-content:center;}
+.cyf-vs span{
+  width:3.1em; height:3.1em; display:grid; place-items:center; border-radius:999px;
+  background:var(--cyf-card); border:2px solid var(--cyf-border);
+  font-size:1.15rem; font-weight:800; letter-spacing:-.03em; color:var(--cyf-muted);
+}
+.cyf-foot{margin:1.6rem 0 0; font-size:.8rem; color:var(--cyf-muted); text-align:center;}
+.cyf-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+@media (max-width:720px){
+  .cyf-arena{grid-template-columns:1fr;}
+  .cyf-vs{margin:-.4rem 0;}
+  .cyf-vs span{font-size:1rem;}
+}
+@keyframes cyf-rise{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion:reduce){
+  .cyf-card{animation:none;}
+  .cyf-card, .cyf-btn{transition:none;}
+  .cyf-card:hover, .cyf-card:focus-within{transform:none;}
+}
+</style>
+
+<div class="cyf">
+  <p class="cyf-sub">Choose your build. Résumé or CV?</p>
+
+  <div class="cyf-arena">
+
+    <article class="cyf-card">
+      <span class="cyf-tag">Academic</span>
+      <h2 class="cyf-name">Academic CV</h2>
+      <p class="cyf-aud">For academic searches, fellowship applications, invited talks, and grant packages.</p>
+
+      <div class="cyf-stats">
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Breadth</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on tip"></i></span>
+          <span class="cyf-sr">Breadth: 5 of 5</span>
+        </div>
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Publications</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on tip"></i></span>
+          <span class="cyf-sr">Publications: 5 of 5</span>
+        </div>
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Brevity</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+          <span class="cyf-sr">Brevity: 2 of 5</span>
+        </div>
+      </div>
+
+      <ul class="cyf-inside">
+        <li>Full publication record, including work in prep and under review</li>
+        <li>Conference talks, posters, and honors</li>
+        <li>Detailed, multi-page research history</li>
+      </ul>
+
+      <div class="cyf-actions">
+        <a class="cyf-btn cyf-btn--solid" href="/files/cv.pdf" target="_blank" rel="noopener">View CV</a>
+        <a class="cyf-btn cyf-btn--ghost" href="/files/cv.pdf" download="Nacef-Guessaymi-CV.pdf">Download</a>
+      </div>
+    </article>
+
+    <div class="cyf-vs"><span>VS</span></div>
+
+    <article class="cyf-card">
+      <span class="cyf-tag">Industry</span>
+      <h2 class="cyf-name">Industry Résumé</h2>
+      <p class="cyf-aud">For recruiters who want a quick look at my profile.</p>
+
+      <div class="cyf-stats">
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Focus</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on tip"></i></span>
+          <span class="cyf-sr">Focus: 5 of 5</span>
+        </div>
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Stack</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on tip"></i></span>
+          <span class="cyf-sr">Stack: 5 of 5</span>
+        </div>
+        <div class="cyf-stat">
+          <span class="cyf-stat-label">Brevity</span>
+          <span class="cyf-pips" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on tip"></i></span>
+          <span class="cyf-sr">Brevity: 5 of 5</span>
+        </div>
+      </div>
+
+      <ul class="cyf-inside">
+        <li>Projects with explicit tech stacks</li>
+        <li>Skills grouped by domain: languages, computing, ML, infra</li>
+        <li>One page, ATS-friendly (ligatures disabled for clean parsing)</li>
+      </ul>
+
+      <div class="cyf-actions">
+        <a class="cyf-btn cyf-btn--solid" href="/files/resume.pdf" target="_blank" rel="noopener">View résumé</a>
+        <a class="cyf-btn cyf-btn--ghost" href="/files/resume.pdf" download="Nacef-Guessaymi-Resume.pdf">Download</a>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="cyf-foot">Both compile fresh from Typst source code from <a href="https://github.com/nacefguessaymi/resume" target="_blank" rel="noopener">my resume repo</a> on every deploy — not an uploaded PDF.</p>
+</div>

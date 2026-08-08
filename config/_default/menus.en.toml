@@ -1,4 +1,10 @@
 [[main]]
+
+  name = "Resumé and CV"
+  pageRef = "resume-cv"
+  weight = 30
+
+[[main]]
   name = "Job Search"
   pageRef = "job_search"
   weight = 30
