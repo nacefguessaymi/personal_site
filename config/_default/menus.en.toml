@@ -1,11 +1,15 @@
 [[main]]
-
   name = "Resumé and CV"
   pageRef = "resume-cv"
-  weight = 30
+  weight = 20
 
 [[main]]
   name = "Job Search"
   pageRef = "job_search"
   weight = 30
+
+[[main]]
+  name = "Publications"
+  pageRef = "publications"
+  weight = 10
 

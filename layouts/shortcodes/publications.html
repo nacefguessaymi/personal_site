@@ -1,0 +1,144 @@
+<style>
+.pubs{
+  --pub-card:#f8fafc; --pub-border:#e2e8f0; --pub-text:#0f172a;
+  --pub-muted:#64748b; --pub-primary:#2563eb; --pub-accent:#06b6d4;
+  --pub-code-bg:#f1f5f9; --pub-on-primary:#ffffff;
+  max-width:52rem; margin:0 auto;
+}
+html.dark .pubs{
+  --pub-card:#1e293b; --pub-border:#334155; --pub-text:#f1f5f9;
+  --pub-muted:#94a3b8; --pub-primary:#60a5fa; --pub-accent:#22d3ee;
+  --pub-code-bg:#0f172a; --pub-on-primary:#0b1220;
+}
+.pub-card{
+  background:var(--pub-card); border:1px solid var(--pub-border); border-radius:14px;
+  padding:1.35rem 1.4rem; margin:0 0 1rem;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+.pub-card:hover{border-color:var(--pub-primary); box-shadow:0 10px 26px -16px color-mix(in srgb, var(--pub-primary) 55%, transparent);}
+.pub-top{display:flex; gap:.6rem; align-items:baseline; flex-wrap:wrap; margin-bottom:.5rem;}
+.pub-badge{
+  font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--pub-primary); border:1px solid var(--pub-primary);
+  border-radius:999px; padding:.15rem .55rem; white-space:nowrap;
+}
+.pub-year{font-size:.8rem; font-weight:600; color:var(--pub-muted); margin-left:auto;}
+.pub-title{font-size:1.08rem; font-weight:700; line-height:1.35; color:var(--pub-text); margin:0 0 .4rem;}
+.pub-authors{font-size:.9rem; color:var(--pub-muted); line-height:1.5; margin:0 0 .3rem;}
+.pub-authors b{color:var(--pub-text); font-weight:700;}
+.pub-venue{font-size:.85rem; font-style:italic; color:var(--pub-text); margin:0 0 .9rem;}
+.pub-actions{display:flex; gap:.5rem; flex-wrap:wrap;}
+.pub-btn{
+  display:inline-flex; align-items:center; gap:.35rem; cursor:pointer;
+  font-size:.82rem; font-weight:600; font-family:inherit;
+  padding:.4rem .75rem; border-radius:8px; text-decoration:none;
+  border:1px solid var(--pub-border); background:transparent; color:var(--pub-text);
+  transition:border-color .15s ease, background .15s ease, color .15s ease, transform .1s ease;
+}
+.pub-btn:hover{border-color:var(--pub-primary); color:var(--pub-primary);}
+.pub-btn:active{transform:scale(.98);}
+.pub-btn--doi{border-color:var(--pub-primary); background:var(--pub-primary); color:var(--pub-on-primary);}
+.pub-btn--doi:hover{background:color-mix(in srgb, var(--pub-primary) 82%, black); color:var(--pub-on-primary);}
+.pub-btn:focus-visible{outline:2px solid var(--pub-primary); outline-offset:2px;}
+.pub-panel{
+  overflow:hidden; max-height:0; opacity:0;
+  transition:max-height .28s ease, opacity .28s ease, margin .28s ease;
+}
+.pub-panel.open{max-height:60rem; opacity:1; margin-top:.9rem;}
+.pub-abstract{font-size:.88rem; line-height:1.6; color:var(--pub-text); margin:0 0 .8rem;}
+.pub-bibwrap{position:relative;}
+.pub-bib{
+  background:var(--pub-code-bg); border:1px solid var(--pub-border); border-radius:8px;
+  padding:.85rem .9rem; margin:0; overflow-x:auto;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.76rem; line-height:1.5; color:var(--pub-text); white-space:pre;
+}
+.pub-copy{
+  position:absolute; top:.55rem; right:.55rem;
+  font-size:.72rem; font-weight:600; font-family:inherit; cursor:pointer;
+  padding:.28rem .55rem; border-radius:6px;
+  border:1px solid var(--pub-border); background:var(--pub-card); color:var(--pub-muted);
+  transition:color .15s ease, border-color .15s ease;
+}
+.pub-copy:hover{color:var(--pub-primary); border-color:var(--pub-primary);}
+.pub-copy.done{color:var(--pub-accent); border-color:var(--pub-accent);}
+.pub-store{display:none;}
+.pub-caret{transition:transform .2s ease;}
+.pub-btn[aria-expanded="true"] .pub-caret{transform:rotate(180deg);}
+@media (prefers-reduced-motion:reduce){
+  .pub-panel, .pub-caret, .pub-card, .pub-btn{transition:none;}
+}
+</style>
+
+<div class="pubs">
+{{ range $i, $p := .Site.Data.publications.publication }}
+  <article class="pub-card">
+    <div class="pub-top">
+      <span class="pub-badge">{{ $p.type }}</span>
+      <span class="pub-year">{{ $p.year }}</span>
+    </div>
+    <h3 class="pub-title">{{ $p.title }}</h3>
+    <p class="pub-authors">{{ replace $p.authors "Guessaymi N." "<b>Guessaymi N.</b>" | safeHTML }}</p>
+    <p class="pub-venue">{{ $p.venue }}</p>
+
+    <div class="pub-actions">
+      {{ with $p.url }}<a class="pub-btn pub-btn--doi" href="{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
+      <button class="pub-btn" type="button" aria-expanded="false" data-toggle="{{ $i }}">
+        Details <span class="pub-caret" aria-hidden="true">▾</span>
+      </button>
+    </div>
+
+    <div class="pub-panel" id="pub-panel-{{ $i }}">
+      {{ with $p.abstract }}<p class="pub-abstract">{{ . }}</p>{{ end }}
+      <div class="pub-bibwrap">
+        <button class="pub-copy" type="button" data-copy="{{ $i }}">Copy</button>
+        <pre class="pub-bib" id="pub-bib-{{ $i }}">{{ $p.bibtex | chomp }}</pre>
+      </div>
+    </div>
+
+    <span class="pub-store" id="pub-store-{{ $i }}">{{ $p.bibtex | chomp }}</span>
+  </article>
+{{ end }}
+</div>
+
+<script>
+(function(){
+  var root = document.currentScript.previousElementSibling;
+  if(!root || !root.classList.contains('pubs')) root = document.querySelector('.pubs');
+  if(!root) return;
+
+  root.addEventListener('click', function(e){
+    var toggle = e.target.closest('[data-toggle]');
+    if(toggle){
+      var id = toggle.getAttribute('data-toggle');
+      var panel = root.querySelector('#pub-panel-'+id);
+      var open = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      return;
+    }
+    var copy = e.target.closest('[data-copy]');
+    if(copy){
+      var cid = copy.getAttribute('data-copy');
+      var store = root.querySelector('#pub-store-'+cid);
+      var text = store ? store.textContent : '';
+      var done = function(){
+        var orig = copy.textContent;
+        copy.textContent = 'Copied';
+        copy.classList.add('done');
+        setTimeout(function(){ copy.textContent = orig; copy.classList.remove('done'); }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(text); done(); });
+      } else { fallback(text); done(); }
+    }
+  });
+
+  function fallback(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(err){}
+    document.body.removeChild(ta);
+  }
+})();
+</script>

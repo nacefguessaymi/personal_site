@@ -1,0 +1,49 @@
+# Publications data — consumed by layouts/shortcodes/publications.html
+# Ordered newest first. `bibtex` holds the raw entry for the copy button.
+# To add a publication: copy a [[publication]] block, fill the fields,
+# and paste the raw BibTeX into the bibtex = """ ... """ triple-quoted string.
+
+[[publication]]
+key = "yang_exploring_2024"
+title = "Exploring Cellular Gateways: Unraveling the Secrets of Disordered Proteins within Live Nuclear Pores"
+authors = "Yang W., Yu W., Tingey M., Kelich J., Li Y., Yu J., Junod S., Jiang Z., Hansen I., Guessaymi N."
+venue = "Research Square (In Review)"
+year = "2024"
+type = "Preprint"
+doi = "10.21203/rs.3.rs-3504130/v1"
+url = "https://doi.org/10.21203/rs.3.rs-3504130/v1"
+abstract = "High-speed 2D single-molecule tracking and virtual 3D super-resolution microscopy in live HeLa cells map the spatial distribution of all eleven FG-rich nucleoporins within individual nuclear pore complexes, revealing a capped trichoid channel spanning ~270 nm that accommodates multiple passive and facilitated transport pathways."
+bibtex = """
+@misc{yang_exploring_2024,
+  title  = {Exploring Cellular Gateways: Unraveling the Secrets of Disordered Proteins within Live Nuclear Pores},
+  author = {Yang, Weidong and Yu, Wenlan and Tingey, Mark and Kelich, Joseph and Li, Yichen and Yu, Jinjie and Junod, Samuel and Jiang, Zecheng and Hansen, Ian and Guessaymi, Nacef},
+  year   = {2024},
+  doi    = {10.21203/rs.3.rs-3504130/v1},
+  url    = {https://doi.org/10.21203/rs.3.rs-3504130/v1},
+  publisher = {In Review},
+  note   = {Preprint}
+}
+"""
+
+[[publication]]
+key = "reddy_vivo_2023"
+title = "In vivo optogenetic stimulation using Parylene photonic waveguides for light delivery"
+authors = "Reddy J. W., Jain V., Guessaymi N., Malekoshoaraie M. H., Chamanzar M."
+venue = "Proc. SPIE 12366, Optogenetics and Optical Manipulation 2023"
+year = "2023"
+type = "Conference"
+doi = "10.1117/12.2651613"
+url = "https://doi.org/10.1117/12.2651613"
+abstract = "Demonstration of flexible, biocompatible Parylene-C optical waveguides as implantable interfaces for in vivo optogenetic light delivery, presented at SPIE Photonics West."
+bibtex = """
+@inproceedings{reddy_vivo_2023,
+  title     = {In vivo optogenetic stimulation using Parylene photonic waveguides for light delivery},
+  author    = {Reddy, Jay W. and Jain, Vishal and Guessaymi, Nacef and Malekoshoaraie, Mohammad H. and Chamanzar, Maysamreza},
+  booktitle = {Optogenetics and Optical Manipulation 2023},
+  year      = {2023},
+  pages     = {14},
+  publisher = {SPIE},
+  doi       = {10.1117/12.2651613},
+  url       = {https://doi.org/10.1117/12.2651613}
+}
+"""
