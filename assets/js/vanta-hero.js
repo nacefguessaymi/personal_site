@@ -28,13 +28,14 @@ function initVanta() {
     color: colors.primary,
     color2: colors.secondary,
     backgroundColor: colors.background,
-    size: 1.20,
-    spacing: 28.00,
+    size: 2.0,
+    spacing: 20.00,
     showLines: false
   });
 }
 
-initVanta();
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduce) initVanta();
 
 // Resize the container and Vanta whenever the window changes size
 window.addEventListener('resize', () => {
@@ -43,5 +44,12 @@ window.addEventListener('resize', () => {
 });
 
 // Re-run whenever Blowfish toggles dark mode
-const observer = new MutationObserver(initVanta);
+let lastIsDark = document.documentElement.classList.contains('dark');
+const observer = new MutationObserver(() => {
+  const isDark = document.documentElement.classList.contains('dark');
+  if (isDark !== lastIsDark) {
+    lastIsDark = isDark;
+    initVanta();
+  }
+});
 observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
