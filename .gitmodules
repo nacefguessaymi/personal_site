@@ -2,6 +2,6 @@
 	path = themes/blowfish
 	url = https://github.com/nunocoracao/blowfish.git
 	branch = main
-[submodule "resume"]
-	path = resume
+[submodule "external/resume"]
+	path = external/resume
 	url = https://github.com/nacefguessaymi/resume.git
