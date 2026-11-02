@@ -1,0 +1,53 @@
+/* ==========================================================================
+   ng/theme.css — LAYER 0: raw color + shape primitives
+   --------------------------------------------------------------------------
+   Plain :root custom properties. (Not Tailwind @theme: Blowfish ships
+   precompiled CSS and never runs Tailwind on project files, so a @theme block
+   would be silently dropped by the browser.)
+
+   Every primitive the ng system uses is pinned here, including the slate
+   neutrals. Blowfish's own --color-* variables are bare RGB triplets
+   ("248, 250, 252"), not usable colors, so ng doesn't depend on them.
+
+   Only theme-INDEPENDENT values live here. Anything that flips between light
+   and dark is a semantic token in tokens.css.
+   ========================================================================== */
+
+:root {
+  /* radii */
+  --radius-ng:    0.75rem;
+  --radius-ng-sm: 0.5rem;
+
+  /* slate (neutrals) */
+  --color-ng-slate-50:  #f8fafc;
+  --color-ng-slate-100: #f1f5f9;
+  --color-ng-slate-200: #e2e8f0;
+  --color-ng-slate-300: #cbd5e1;
+  --color-ng-slate-400: #94a3b8;
+  --color-ng-slate-500: #64748b;
+  --color-ng-slate-600: #475569;
+  --color-ng-slate-700: #334155;
+  --color-ng-slate-800: #1e293b;
+  --color-ng-slate-900: #0f172a;
+
+  /* blue (primary) */
+  --color-ng-blue-100: #dbeafe;
+  --color-ng-blue-300: #93c5fd;
+  --color-ng-blue-400: #60a5fa;
+  --color-ng-blue-500: #3b82f6;
+  --color-ng-blue-600: #2563eb;
+  --color-ng-blue-700: #1d4ed8;
+  --color-ng-blue-900: #1e3a8a;
+
+  /* cyan (accent) */
+  --color-ng-cyan-200: #a5f3fc;
+  --color-ng-cyan-400: #22d3ee;
+  --color-ng-cyan-500: #06b6d4;
+  --color-ng-cyan-600: #0891b2;
+
+  /* on-fill text (text sitting on solid button fills).
+     ink is deliberately NOT a slate step: a bluer near-black that reads
+     cleanly on blue-400 (~7:1 contrast). */
+  --color-ng-white: #ffffff;
+  --color-ng-ink:   #0a1220;
+}

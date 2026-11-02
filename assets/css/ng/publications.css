@@ -1,0 +1,194 @@
+/* ==========================================================================
+   ng/publications.css — LAYER 3: publications-section specifics
+   --------------------------------------------------------------------------
+   Citation cards with toggle-expand abstract + copy-BibTeX. Layout is unique
+   to this page (badge/year row, abstract panel, BibTeX <pre> with copy button),
+   so classes stay pub-*. All COLOR comes from ng tokens (tokens.css) — the old
+   --pub-* private palette and its html.dark .pubs block were DELETED; dark mode
+   flows through the tokens like every other ng section.
+
+   NOTE: pub cards do NOT use .ng-card — the BibTeX <pre> needs overflow-x:auto
+   for long lines, which .ng-card's overflow:hidden would clip. So pub-card is
+   its own thing, just token-colored.
+
+   --pub-* -> --ng-* map:
+     --pub-card       -> --ng-card-bg
+     --pub-border     -> --ng-card-border
+     --pub-text       -> --ng-text-strong
+     --pub-muted      -> --ng-text-muted
+     --pub-primary    -> --ng-btn-bg
+     --pub-accent     -> --ng-accent
+     --pub-code-bg    -> --ng-code-bg   (new token)
+     --pub-on-primary -> --ng-btn-fg
+   ========================================================================== */
+
+.pubs {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.pub-card {
+  background: var(--ng-card-bg);
+  border: 1px solid var(--ng-card-border);
+  border-radius: 14px;
+  padding: 1.35rem 1.4rem;
+  margin: 0 0 1rem;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.pub-card:hover {
+  border-color: var(--ng-hover-border);
+  box-shadow: var(--ng-hover-shadow);
+}
+
+.pub-top {
+  display: flex;
+  gap: .6rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: .5rem;
+}
+.pub-badge {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ng-btn-bg);
+  border: 1px solid var(--ng-btn-bg);
+  border-radius: 999px;
+  padding: .15rem .55rem;
+  white-space: nowrap;
+}
+.pub-year {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ng-text-muted);
+  margin-left: auto;
+}
+.pub-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ng-text-strong);
+  margin: 0 0 .4rem;
+}
+.pub-authors {
+  font-size: .9rem;
+  color: var(--ng-text-muted);
+  line-height: 1.5;
+  margin: 0 0 .3rem;
+}
+.pub-authors b {
+  color: var(--ng-text-strong);
+  font-weight: 700;
+}
+.pub-venue {
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--ng-text-strong);
+  margin: 0 0 .9rem;
+}
+
+.pub-actions {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.pub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: .4rem .75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid var(--ng-card-border);
+  background: transparent;
+  color: var(--ng-text-strong);
+  transition: border-color .15s ease, background .15s ease, color .15s ease, transform .1s ease;
+}
+.pub-btn:hover {
+  border-color: var(--ng-btn-bg);
+  color: var(--ng-btn-bg);
+}
+.pub-btn:active { transform: scale(.98); }
+.pub-btn--doi {
+  border-color: var(--ng-btn-bg);
+  background: var(--ng-btn-bg);
+  color: var(--ng-btn-fg);
+}
+.pub-btn--doi:hover {
+  background: var(--ng-btn-bg-hover);
+  color: var(--ng-btn-fg);
+}
+.pub-btn:focus-visible {
+  outline: 2px solid var(--ng-btn-bg);
+  outline-offset: 2px;
+}
+
+.pub-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .28s ease, opacity .28s ease, margin .28s ease;
+}
+.pub-panel.open {
+  max-height: 60rem;
+  opacity: 1;
+  margin-top: .9rem;
+}
+.pub-abstract {
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--ng-text-strong);
+  margin: 0 0 .8rem;
+}
+
+.pub-bibwrap { position: relative; }
+.pub-bib {
+  background: var(--ng-code-bg);
+  border: 1px solid var(--ng-card-border);
+  border-radius: 8px;
+  padding: .85rem .9rem;
+  margin: 0;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .76rem;
+  line-height: 1.5;
+  color: var(--ng-text-strong);
+  white-space: pre;
+}
+.pub-copy {
+  position: absolute;
+  top: .55rem;
+  right: .55rem;
+  font-size: .72rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  padding: .28rem .55rem;
+  border-radius: 6px;
+  border: 1px solid var(--ng-card-border);
+  background: var(--ng-card-bg);
+  color: var(--ng-text-muted);
+  transition: color .15s ease, border-color .15s ease;
+}
+.pub-copy:hover {
+  color: var(--ng-btn-bg);
+  border-color: var(--ng-btn-bg);
+}
+.pub-copy.done {
+  color: var(--ng-accent);
+  border-color: var(--ng-accent);
+}
+
+.pub-store { display: none; }
+
+.pub-caret { transition: transform .2s ease; }
+.pub-btn[aria-expanded="true"] .pub-caret { transform: rotate(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pub-panel, .pub-caret, .pub-card, .pub-btn { transition: none; }
+}

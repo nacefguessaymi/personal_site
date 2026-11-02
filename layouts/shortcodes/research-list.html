@@ -1,0 +1,46 @@
+{{/*
+  research-list.html
+  Renders project cards on /research/ from the data/research/ directory.
+  Each file there (e.g. data/research/amyloids.toml) is one project, exposed by
+  Hugo as site.Data.research.<filename>. The filename IS the slug.
+  Map iteration order is not guaranteed, so we build a slice and sort by `weight`.
+  Cards link to /research/<slug>/ — real pages served by the stub index.md files.
+  Styling: shared .ng-* classes (ng/components.css) + .rsx-* (ng/research.css),
+  loaded by layouts/partials/extend-head.html.
+*/}}
+
+{{ $projects := slice }}
+{{ range $slug, $p := site.Data.research }}
+  {{ $projects = $projects | append (dict
+      "slug"     $slug
+      "title"    (default $slug $p.title)
+      "tagline"  (default "" $p.tagline)
+      "weight"   (default 999 $p.weight)
+      "image"    (default "" $p.image)
+      "imageAlt" (default "" $p.imageAlt)
+      "tools"    (default (slice) $p.tools)
+  ) }}
+{{ end }}
+{{ $projects = sort $projects "weight" "asc" }}
+
+<div class="ng-card-grid">
+  {{ range $projects }}
+  <a class="ng-card" href="{{ printf "/research/%s/" .slug | relURL }}">
+    {{ with .image }}
+    <div class="rsx-card-media">
+      <img src="{{ . | relURL }}" alt="{{ $.imageAlt }}" loading="lazy" />
+    </div>
+    {{ end }}
+    <div class="rsx-card-body">
+      <h3 class="rsx-card-title">{{ .title }}</h3>
+      {{ with .tagline }}<p class="rsx-card-tagline">{{ . }}</p>{{ end }}
+      {{ with .tools }}
+      <div class="ng-tag-row">
+        {{ range . }}<span class="ng-tag">{{ . }}</span>{{ end }}
+      </div>
+      {{ end }}
+      <span class="rsx-card-cta">View project &rarr;</span>
+    </div>
+  </a>
+  {{ end }}
+</div>

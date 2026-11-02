@@ -1,0 +1,40 @@
+# One project per file. The FILENAME is the slug.
+#   this file = data/research/example-project.toml  ->  slug "example-project"
+#   detail page stub must call {{< research-detail slug="example-project" >}}
+#   and live at content/research/example-project/index.md
+#
+# No [[project]] wrapper here — fields sit at the top level, because Hugo
+# keys this whole file under its filename (site.Data.research.example-project).
+#
+# Adding a project: copy this file to data/research/<new-slug>.toml, edit the
+# fields, and create the matching content/research/<new-slug>/index.md stub.
+#
+# Fields:
+#   title     (required) display name
+#   tagline   (optional) one-line hook on the card
+#   weight    (optional) sort order, lower = first. IMPORTANT: set this — file
+#             order is NOT guaranteed, so weight controls card order. defaults 999.
+#   blurb     (required) short description, markdown supported
+#   image     (optional) path under static/, e.g. "/images/research/example-project/hero.png"
+#             leave "" until you have figures
+#   imageAlt  (optional) alt text
+#   tools     (optional) list of tags, e.g. ["AutoDock", "RDKit"]
+#   links     (optional) list of {label, url}
+
+title = "Molecular Dynamics"
+tagline = "Simulating protein dynamics."
+weight = 10
+blurb = """
+I run molecular dynamics simulations on protein systems, with a focus on amyloid aggregation, and build the tooling that supports that work. Each simulation generates a long trajectory of every atom’s motion, which means a lot of the work is in the analysis — extracting the few measurements that actually mean something from a very large amount of data.
+"""
+image = ""
+imageAlt = ""
+tools = ["Python", "Bash", "SLURM", "HPC", "Git", "pixi", "conda-forge", "SciPy", "UMAP", "HDBSCAN", "MDAnalysis", "pytraj", "OpenMM", "OpenFF Toolkit", "OpenFF Interchange", "openmmforcefields", "AMBER", "RDKit", "PDBFixer", "AmberTools", "NumPy", "Matplotlib", "loguru", "pytest", "Ruff", "basedpyright", "MkDocs", "mkdocstrings", "GitHub Actions", "rattler-build", "setuptools-scm",]
+
+  [[links]]
+  label = "Code"
+  url = "Private"
+
+  [[links]]
+  label = "Preprint"
+  url = "Private"

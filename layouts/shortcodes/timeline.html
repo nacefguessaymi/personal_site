@@ -1,68 +1,18 @@
-<style>
-.tl{
-  --tl-card:#f8fafc; --tl-border:#e2e8f0; --tl-text:#0f172a;
-  --tl-muted:#64748b; --tl-primary:#2563eb; --tl-accent:#06b6d4;
-  --tl-spine:#e2e8f0;
-  max-width:56rem; margin:0 auto;
-}
-html.dark .tl{
-  --tl-card:#1e293b; --tl-border:#334155; --tl-text:#f1f5f9;
-  --tl-muted:#94a3b8; --tl-primary:#60a5fa; --tl-accent:#22d3ee;
-  --tl-spine:#334155;
-}
-.tl-grid{display:grid; grid-template-columns:11rem 1fr; gap:2rem; align-items:start;}
-.tl-aside{position:sticky; top:6rem; align-self:start;}
-.tl-marker-year{
-  font-size:2.6rem; font-weight:800; letter-spacing:-.02em; line-height:1;
-  color:var(--tl-primary); font-variant-numeric:tabular-nums;
-  transition:color .3s ease;
-}
-.tl-marker-tag{
-  display:inline-block; margin-top:.6rem; font-size:.72rem; font-weight:700;
-  letter-spacing:.1em; text-transform:uppercase; color:var(--tl-accent);
-}
-.tl-progress{margin-top:1.1rem; height:3px; background:var(--tl-spine); border-radius:2px; overflow:hidden;}
-.tl-progress-fill{height:100%; width:0; background:var(--tl-primary); transition:width .3s ease;}
-.tl-track{position:relative; padding-left:1.75rem;}
-.tl-track::before{
-  content:""; position:absolute; left:5px; top:.4rem; bottom:.4rem;
-  width:2px; background:var(--tl-spine);
-}
-.tl-entry{position:relative; margin:0 0 1.75rem; opacity:.55; transition:opacity .35s ease, transform .35s ease;}
-.tl-entry:last-child{margin-bottom:0;}
-.tl-entry.tl-active{opacity:1;}
-.tl-entry::before{
-  content:""; position:absolute; left:-1.75rem; top:.55rem;
-  width:12px; height:12px; border-radius:50%;
-  background:var(--tl-card); border:2px solid var(--tl-spine);
-  transform:translateX(0); transition:border-color .35s ease, background .35s ease, transform .35s ease;
-}
-.tl-entry.tl-active::before{border-color:var(--tl-primary); background:var(--tl-primary); transform:scale(1.25);}
-.tl-card{
-  background:var(--tl-card); border:1px solid var(--tl-border);
-  border-radius:14px; padding:1.15rem 1.3rem;
-  transition:border-color .35s ease, box-shadow .35s ease;
-}
-.tl-entry.tl-active .tl-card{border-color:var(--tl-primary); box-shadow:0 10px 28px -18px color-mix(in srgb, var(--tl-primary) 60%, transparent);}
-.tl-year-inline{
-  display:none; font-size:.85rem; font-weight:700; color:var(--tl-primary);
-  font-variant-numeric:tabular-nums; margin-bottom:.25rem;
-}
-.tl-title{font-size:1.1rem; font-weight:700; line-height:1.35; color:var(--tl-text); margin:0 0 .2rem;}
-.tl-place{font-size:.85rem; color:var(--tl-muted); margin:0 0 .6rem;}
-.tl-body{font-size:.92rem; line-height:1.65; color:var(--tl-text); margin:0;}
-.tl-blurb{font-size:1.05rem; line-height:1.7; color:var(--tl-text); max-width:42rem; margin:0 0 3rem;}
-@media (max-width:720px){
-  .tl-grid{grid-template-columns:1fr; gap:0;}
-  .tl-aside{display:none;}
-  .tl-year-inline{display:block;}
-  .tl-entry{opacity:1;}
-}
-@media (prefers-reduced-motion:reduce){
-  .tl-entry, .tl-card, .tl-entry::before, .tl-marker-year, .tl-progress-fill{transition:none;}
-  .tl-entry{opacity:1;}
-}
-</style>
+{{/*
+  timeline.html — About-page scroll timeline. Data: data/timeline.toml.
+  Styling lives in assets/css/ng/timeline.css, bundled and loaded by
+  layouts/partials/extend-head.html.
+
+  --tl-* -> ng token map (colors now come from tokens.css):
+    --tl-card     -> --ng-card-bg
+    --tl-border   -> --ng-card-border
+    --tl-text     -> --ng-text-strong   (title, body, blurb)
+    --tl-muted    -> --ng-text-muted
+    --tl-primary  -> --ng-btn-bg        (year, dots, progress, active border)
+    --tl-accent   -> --ng-accent
+    --tl-spine    -> --ng-divider (spine, dot ring) / --ng-track (progress bg)
+  Dark mode: handled entirely by tokens.css; the old html.dark .tl block is gone.
+*/}}
 
 <div class="tl">
 
@@ -79,9 +29,9 @@ html.dark .tl{
       {{ range $i, $e := .Site.Data.timeline.entry }}
       <div class="tl-entry{{ if eq $i 0 }} tl-active{{ end }}" data-year="{{ $e.year }}" data-tag="{{ $e.tag }}" data-index="{{ $i }}">
         <div class="tl-card">
-          <div class="tl-year-inline">{{ $e.year }}{{ with $e.tag }} · {{ . }}{{ end }}</div>
+          <div class="tl-year-inline">{{ $e.year }}</div>
           <h3 class="tl-title">{{ $e.title }}</h3>
-          {{ with $e.place }}<p class="tl-place">{{ . }}</p>{{ end }}
+          {{ with $e.tag }}<div class="ng-tag-row tl-tags"><span class="ng-tag" data-slug="{{ . | lower | urlize }}">{{ . }}</span></div>{{ end }}
           <p class="tl-body">{{ $e.body | safeHTML }}</p>
         </div>
       </div>
@@ -160,6 +110,37 @@ html.dark .tl{
   function onScroll(){
     if(!ticking){ ticking = true; window.requestAnimationFrame(update); }
   }
+
+  // Click-to-snap: scroll the entry just past the trigger line and let update()
+  // activate it, so scroll position stays the only source of active state.
+  // Affordance styles (.tl-entry[tabindex], :focus-visible) live in ng/timeline.css.
+  var aside = root.querySelector('.tl-aside');
+  function hudVisible(){
+    // The snap's payoff is the HUD updating, and the HUD is display:none in the
+    // stacked layout. Reading it from CSS avoids repeating the 720px breakpoint.
+    return !!aside && getComputedStyle(aside).display !== 'none';
+  }
+
+  function snapTo(i){
+    var line = window.innerHeight * LINE_FRAC;
+    var top  = entries[i].getBoundingClientRect().top;
+    // Land 2px past the line so update()'s `top <= line` test is unambiguous.
+    window.scrollTo({ top: window.scrollY + top - line + 2, behavior: 'smooth' });
+  }
+
+  entries.forEach(function(el, i){
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('click', function(e){
+      if(!hudVisible()) return;                  // stacked layout: taps are usually just reading
+      if(e.target.closest('a, button')) return;  // links in the body still navigate
+      if(String(window.getSelection())) return;  // don't yank someone selecting text
+      snapTo(i);
+    });
+    el.addEventListener('keydown', function(e){
+      if(e.target !== el) return;                // Enter on a link inside should follow the link
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); snapTo(i); }
+    });
+  });
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function(){ setRunway(); onScroll(); }, { passive: true });

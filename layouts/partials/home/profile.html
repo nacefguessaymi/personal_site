@@ -32,17 +32,14 @@
     <h1 class="text-4xl font-extrabold">
       {{ .Site.Params.Author.name | default .Site.Title }}
     </h1>
-    {{ with .Site.Params.Author.headline }}
-      <h2 class="text-xl text-neutral-500 dark:text-neutral-400">
-        {{ . | markdownify }}
-      </h2>
-    {{ end }}
     <div class="mt-1 text-2xl">
       {{ partialCached "author-links.html" . }}
     </div>
-    <div class="mt-4 inline-block px-4 py-1.5 rounded-full border border-primary-500 text-primary-600 dark:text-primary-400 text-sm font-medium">
-  🚧 Under construction — check back soon!
+  {{ with .Site.Params.Author.headline }}
+  <div class="ng-tag ng-hero-pill mt-4">
+    {{ . | markdownify }}
   </div>
+  {{ end }}
   </header>
   <section class="prose dark:prose-invert w-full">{{ .Content }}</section>
 </article>

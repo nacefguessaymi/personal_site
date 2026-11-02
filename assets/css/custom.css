@@ -1,1 +1,9 @@
-@source "../../layouts";
+/* ==========================================================================
+   custom.css — Blowfish's auto-loaded override file.
+   Blowfish minifies this and appends it to its precompiled theme bundle.
+   It is NOT run through Tailwind, so @import / @theme / @source do nothing here.
+
+   The ng design system (assets/css/ng/*.css) is bundled and loaded by
+   layouts/partials/extend-head.html instead. Put only small one-off
+   overrides in this file.
+   ========================================================================== */

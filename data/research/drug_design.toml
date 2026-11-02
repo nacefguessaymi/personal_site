@@ -1,0 +1,21 @@
+# data/research/drug_design.toml  ->  slug "drug_design"
+# Page: content/research/drug_design/index.md -> /research/computational_drug_design/
+# weight sets card order on /research/ (lower = first).
+
+title = "Computer-Aided Drug Design"
+tagline = "Designing small molecules that target systems."
+weight = 20
+blurb = """
+Antibiotic resistance is outpacing the development of new drugs, and many of the most promising bacterial targets have only recently become structurally tractable.
+My work builds automated virtual screening pipelines that take a protein structure and a large compound library and return a testable shortlist: docking at scale on HPC clusters, then triage by predicted affinity, chemical diversity, and commercial availability.
+Each pipeline is released as a documented, reproducible Python package so that screens can be audited, rerun, and redirected at new targets as structures become available.
+"""
+image = ""
+imageAlt = ""
+tools = ["Python", "Bash", "SLURM", "HPC", "CLI development", "RDKit", "NumPy", "pandas", "Polars", "Zarr", "matplotlib", "scikit-learn", "umap-learn", "BitBirch", "loguru", "PyYAML", "argparse", "pytest", "Jupyter", "MkDocs", "mkdocs-material", "mkdocstrings", "mkdocs-gen-files", "mkdocs-jupyter",
+"GNINA", "Gypsum-DL", "Reduce", "FTMap", "PyMOL", "ChimeraX", "Mol*", "pixi", "Git", "Ruff", "basedpyright", "MolPort", "UniProt"]   # e.g. ["Tool A", "Tool B"]. Empty list = no tag row shown.
+
+# Add buttons by uncommenting and filling these in. Empty urls are skipped.
+# [[links]]
+# label = "Code"
+# url = ""

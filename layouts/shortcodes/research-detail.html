@@ -1,0 +1,61 @@
+{{/*
+  research-detail.html
+  Renders ONE project on its own page, looked up by slug from data/research/<slug>.toml.
+  Usage in content/research/<slug>/index.md:
+    {{< research-detail slug="<slug>" >}}
+  The slug arg MUST match a FILENAME in data/research/ (minus .toml). If it doesn't,
+  the build ERRORS with a clear message (via errorf) instead of rendering blank —
+  making the one sync point (folder name vs data filename) fail loudly.
+  Styling: shared .ng-* classes (ng/components.css) + .rsx-* (ng/research.css),
+  loaded by layouts/partials/extend-head.html.
+*/}}
+
+{{ $slug := .Get "slug" }}
+{{ $match := index site.Data.research $slug }}
+
+{{ if not $match }}
+  {{ errorf "research-detail: no project file data/research/%s.toml (called from %q). The content folder name and the data filename must match." $slug .Page.File.Path }}
+{{ else }}
+
+<article class="rsx-detail">
+  <header class="rsx-detail-head">
+    <h1 class="rsx-detail-title">{{ default $slug $match.title }}</h1>
+    {{ with $match.tagline }}<p class="rsx-detail-tagline">{{ . }}</p>{{ end }}
+    {{ with $match.tools }}
+    <div class="ng-tag-row rsx-detail-tags">
+      {{ range . }}<span class="ng-tag">{{ . }}</span>{{ end }}
+    </div>
+    {{ end }}
+  </header>
+
+  {{ with $match.image }}
+  <figure class="rsx-detail-figure">
+    <img src="{{ . | relURL }}" alt="{{ $match.imageAlt }}" />
+    {{ with $match.imageAlt }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+  {{ end }}
+
+  <div class="rsx-detail-body">
+    {{ with $match.blurb }}{{ . | $.Page.RenderString }}{{ end }}
+  </div>
+
+  {{ with $match.links }}
+  {{ $hasReal := false }}
+  {{ range . }}{{ if .url }}{{ $hasReal = true }}{{ end }}{{ end }}
+  {{ if $hasReal }}
+  <div class="rsx-detail-links">
+    {{ range . }}
+      {{ if .url }}
+      <a class="ng-link-btn" href="{{ .url }}" target="_blank" rel="noopener">{{ .label }} &rarr;</a>
+      {{ end }}
+    {{ end }}
+  </div>
+  {{ end }}
+  {{ end }}
+
+  <div class="ng-back-link">
+    <a href="{{ "/research/" | relURL }}">&larr; All research</a>
+  </div>
+</article>
+
+{{ end }}

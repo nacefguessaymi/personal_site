@@ -1,0 +1,29 @@
+
+{{- /*
+  ng design system loader.
+  Blowfish injects extend-head.html as the last item in <head>, so this
+  stylesheet loads after the theme's CSS and wins any ties.
+
+  Hugo joins the files below, in this order, into one minified, fingerprinted
+  file. To add a section stylesheet, add its path to this list. A missing file
+  fails the build with a clear error instead of silently loading nothing.
+*/ -}}
+{{- $files := slice
+    "css/ng/theme.css"
+    "css/ng/tokens.css"
+    "css/ng/components.css"
+    "css/ng/research.css"
+    "css/ng/resume.css"
+    "css/ng/publications.css"
+    "css/ng/timeline.css"
+-}}
+{{- $parts := slice -}}
+{{- range $files -}}
+  {{- with resources.Get . -}}
+    {{- $parts = $parts | append . -}}
+  {{- else -}}
+    {{- errorf "extend-head.html: ng stylesheet %q not found in assets/" . -}}
+  {{- end -}}
+{{- end -}}
+{{- $ng := $parts | resources.Concat "css/ng.bundle.css" | resources.Minify | resources.Fingerprint "sha512" -}}
+<link rel="stylesheet" href="{{ $ng.RelPermalink }}" integrity="{{ $ng.Data.Integrity }}">

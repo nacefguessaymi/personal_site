@@ -1,0 +1,23 @@
+# data/research/protein_prediction.toml  ->  slug "protein_prediction"
+# Page: content/research/protein_prediction/index.md -> /research/protein_prediction/
+# The data file name, the content folder name, and the slug must all match.
+# weight sets card order on /research/ (lower = first).
+
+title = "Protein Stuctural Predictions"
+tagline = "Predicting protein structures."   # one-line hook on the card. Empty = hidden.
+weight = 30
+blurb = """
+Many of the proteins worth targeting with new drugs have never had their structures solved experimentally, and without a structure there is little to design against.
+
+I build workflows that predict a protein’s 3D structure directly from its sequence, both on its own and bound to the molecules it naturally interacts with. Each prediction comes with confidence estimates and predicted binding strengths, so much of the work is deciding which models are reliable enough to build on.
+
+The workflows run in batches on HPC clusters and are packaged so predictions can be reproduced and extended to new targets. They supply the starting structures that screening pipelines depend on.
+"""
+image = ""
+imageAlt = ""
+tools = ["Python", "Bash", "SLURM", "HPC", "Boltz-2", "Chai-1", "ColabFold MMseqs2", "UniProt", "argparse", "loguru", "requests", "Jinja2", "RDKit", "PyYAML", "Singularity", "CUDA",  "pixi"]   # e.g. ["Tool A", "Tool B"]. Empty list = no tag row shown.
+
+# Add buttons by uncommenting and filling these in. Empty urls are skipped.
+# [[links]]
+# label = "Code"
+# url = ""

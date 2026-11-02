@@ -1,0 +1,86 @@
+/* ==========================================================================
+   ng/tokens.css — LAYER 1: semantic tokens (the dark-mode layer)
+   --------------------------------------------------------------------------
+   Plain custom properties (NOT @theme) so they can be redefined under
+   html.dark. This is where dark mode lives for the whole ng system: override
+   the VARIABLES here once, and every .ng-* / .rsx-* / .cyf-* rule that
+   references them flips automatically — no per-component html.dark rules.
+
+   Two-tier: these semantic names alias the primitives in theme.css
+   (--color-ng-*, --radius-ng). Swap a primitive and every semantic token that
+   points at it moves too.
+
+   Values NOT repeated under html.dark (radii, motion) are intentionally
+   theme-independent. Button text DOES flip: white on blue-600 in light mode,
+   ink on blue-400 in dark mode.
+   ========================================================================== */
+
+:root {
+  /* surfaces — pinned slate primitives from theme.css (Blowfish's own
+     --color-neutral-* are RGB triplets, not usable as colors) */
+  --ng-card-bg:      var(--color-ng-slate-50);
+  --ng-card-bg-alt:  var(--color-ng-slate-100);
+  --ng-card-border:  var(--color-ng-slate-200);
+  --ng-divider:      var(--color-ng-slate-200);
+  --ng-track:        var(--color-ng-slate-200);   /* empty progress/pip fill */
+  --ng-code-bg:      var(--color-ng-slate-100);   /* code/pre block background */
+
+  /* text */
+  --ng-text:         var(--color-ng-slate-700);
+  --ng-text-strong:  var(--color-ng-slate-800);
+  --ng-text-muted:   var(--color-ng-slate-500);
+
+  /* accents — alias the pinned ng brand scales from theme.css */
+  --ng-accent:       var(--color-ng-cyan-600);
+  --ng-tag-bg:       var(--color-ng-blue-100);
+  --ng-tag-fg:       var(--color-ng-blue-700);
+  --ng-btn-bg:       var(--color-ng-blue-600);
+  --ng-btn-bg-hover: var(--color-ng-blue-700);
+  --ng-btn-fg:       var(--color-ng-white);
+
+    /* pill tones — reusable hue pairs; sections map their own tags onto these */
+  --ng-tone-blue-bg:  var(--color-ng-blue-100);
+  --ng-tone-blue-fg:  var(--color-ng-blue-700);
+  --ng-tone-cyan-bg:  var(--color-ng-cyan-100);
+  --ng-tone-cyan-fg:  var(--color-ng-cyan-800);
+  --ng-tone-slate-bg: var(--color-ng-slate-200);
+  --ng-tone-slate-fg: var(--color-ng-slate-700);
+
+  /* shape + motion — reference theme.css radii; motion is theme-independent */
+  --ng-radius:       var(--radius-ng);
+  --ng-radius-sm:    var(--radius-ng-sm);
+  --ng-hover-lift:   -4px;
+  --ng-hover-shadow: 0 12px 28px -12px rgba(37, 99, 235, 0.35);
+  --ng-hover-border: var(--color-ng-blue-400);
+  --ng-transition:   0.18s ease;
+}
+
+html.dark {
+  --ng-card-bg:      var(--color-ng-slate-800);
+  --ng-card-bg-alt:  var(--color-ng-slate-700);
+  --ng-card-border:  var(--color-ng-slate-700);
+  --ng-divider:      var(--color-ng-slate-700);
+  --ng-track:        var(--color-ng-slate-700);
+  --ng-code-bg:      var(--color-ng-slate-900);
+
+  --ng-text:         var(--color-ng-slate-300);
+  --ng-text-strong:  var(--color-ng-slate-100);
+  --ng-text-muted:   var(--color-ng-slate-400);
+
+  --ng-accent:       var(--color-ng-cyan-400);
+  --ng-tag-bg:       var(--color-ng-blue-900);
+  --ng-tag-fg:       var(--color-ng-cyan-200);
+  --ng-btn-bg:       var(--color-ng-blue-400);
+  --ng-btn-bg-hover: var(--color-ng-blue-300);   /* lighten on hover in dark */
+  --ng-btn-fg:       var(--color-ng-ink);
+
+    --ng-tone-blue-bg:  var(--color-ng-blue-900);
+  --ng-tone-blue-fg:  var(--color-ng-blue-300);
+  --ng-tone-cyan-bg:  var(--color-ng-cyan-900);
+  --ng-tone-cyan-fg:  var(--color-ng-cyan-200);
+  --ng-tone-slate-bg: var(--color-ng-slate-700);
+  --ng-tone-slate-fg: var(--color-ng-slate-200);
+
+  --ng-hover-shadow: 0 12px 28px -12px rgba(59, 130, 246, 0.45);
+  --ng-hover-border: var(--color-ng-blue-500);
+}

@@ -7,7 +7,7 @@
 year = "Present"
 title = "Now"
 place = "Pittsburgh, PA"
-tag = " "
+tag = "Research"
 body = "Currently I am working on wrapping up my research to defend my thesis. I am on the job hunt for Quantitative Researcher roles."
 
 [[entry]]
@@ -123,7 +123,7 @@ body = "Began my high school education at the <a href='https://palumbo.philasd.o
 year = "2003"
 title = "Move"
 place = "Philadelphia, PA"
-tag = "Transition"
+tag = "Life Event"
 body = "We moved from Montréal to Philadelphia."
 
 

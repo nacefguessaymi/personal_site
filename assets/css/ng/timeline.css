@@ -1,0 +1,193 @@
+
+/* ==========================================================================
+   ng/timeline.css — LAYER 3: About-page timeline specifics
+   --------------------------------------------------------------------------
+   Sticky year marker + scroll-activated entries. Layout and motion are unique
+   to this page, so classes stay tl-*. All COLOR comes from ng tokens
+   (tokens.css); the old --tl-* palette and its html.dark .tl override are
+   gone, same as resume/publications.
+
+   JS contract (script in timeline.html) — do not rename:
+     .tl  .tl-track  .tl-entry  .tl-active
+     #tl-marker-year  #tl-marker-tag  #tl-progress-fill
+     data-year / data-tag / data-index
+   ========================================================================== */
+
+.tl {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.tl-blurb {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ng-text-strong);
+  max-width: 42rem;
+  margin: 0 0 3rem;
+}
+
+.tl-grid {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ---- sticky aside: current year, tag, progress ---- */
+.tl-aside {
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+}
+.tl-marker-year {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--ng-btn-bg);
+  font-variant-numeric: tabular-nums;
+  transition: color .3s ease;
+}
+.tl-marker-tag {
+  display: inline-block;
+  margin-top: .6rem;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ng-accent);
+}
+.tl-progress {
+  margin-top: 1.1rem;
+  height: 3px;
+  background: var(--ng-track);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.tl-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--ng-btn-bg);
+  transition: width .3s ease;
+}
+
+/* ---- track: spine + entries ---- */
+.tl-track {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.tl-track::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: .4rem;
+  bottom: .4rem;
+  width: 2px;
+  background: var(--ng-divider);
+}
+
+.tl-entry {
+  position: relative;
+  margin: 0 0 1.75rem;
+  opacity: .55;
+  transition: opacity .35s ease, transform .35s ease;
+}
+.tl-entry:last-child { margin-bottom: 0; }
+.tl-entry.tl-active { opacity: 1; }
+
+/* timeline dot: hollow by default, filled when active */
+.tl-entry::before {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: .55rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ng-card-bg);
+  border: 2px solid var(--ng-divider);
+  transform: translateX(0);
+  transition: border-color .35s ease, background .35s ease, transform .35s ease;
+}
+.tl-entry.tl-active::before {
+  border-color: var(--ng-btn-bg);
+  background: var(--ng-btn-bg);
+  transform: scale(1.25);
+}
+
+
+/* ---- card ---- */
+.tl-card {
+  background: var(--ng-card-bg);
+  border: 1px solid var(--ng-card-border);
+  border-radius: 14px;
+  padding: 1.15rem 1.3rem;
+  transition: border-color .35s ease, box-shadow .35s ease;
+}
+.tl-entry.tl-active .tl-card {
+  border-color: var(--ng-btn-bg);
+  box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--ng-btn-bg) 60%, transparent);
+  /* click-to-snap: JS adds tabindex, so these only apply once the behavior is wired up */
+  .tl-entry[tabindex]{cursor:pointer;}
+  .tl-entry[tabindex].tl-active{cursor:default;}
+  .tl-entry:focus-visible{outline:none;}
+  .tl-entry:focus-visible .tl-card{outline:2px solid var(--ng-accent); outline-offset:3px;}
+}
+
+.tl-year-inline {
+  display: none;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--ng-btn-bg);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: .25rem;
+}
+.tl-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ng-text-strong);
+  margin: 0 0 .2rem;
+}
+.tl-place {
+  font-size: .85rem;
+  color: var(--ng-text-muted);
+  margin: 0 0 .6rem;
+}
+.tl-body {
+  font-size: .92rem;
+  line-height: 1.65;
+  color: var(--ng-text-strong);
+  margin: 0;
+}
+
+/* Tag -> tone mapping. Unlisted tags fall back to the default .ng-tag colors. */
+.tl-tags .ng-tag[data-slug="research"] {
+  --ng-tag-bg: var(--ng-tone-blue-bg);
+  --ng-tag-fg: var(--ng-tone-blue-fg);
+}
+.tl-tags .ng-tag[data-slug="education"],
+.tl-tags .ng-tag[data-slug="award"] {
+  --ng-tag-bg: var(--ng-tone-cyan-bg);
+  --ng-tag-fg: var(--ng-tone-cyan-fg);
+}
+.tl-tags .ng-tag[data-slug="sports"],
+.tl-tags .ng-tag[data-slug="transition"],
+.tl-tags .ng-tag[data-slug="life-event"] {
+  --ng-tag-bg: var(--ng-tone-slate-bg);
+  --ng-tag-fg: var(--ng-tone-slate-fg);
+}
+
+/* ---- mobile: drop the sticky aside, show the year inline ---- */
+@media (max-width: 720px) {
+  .tl-grid { grid-template-columns: 1fr; gap: 0; }
+  .tl-aside { display: none; }
+  .tl-year-inline { display: block; }
+  .tl-entry { opacity: 1; }
+  .tl-entry[tabindex]{cursor:auto;}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-entry, .tl-card, .tl-entry::before, .tl-marker-year, .tl-progress-fill { transition: none; }
+  .tl-entry { opacity: 1; }
+}

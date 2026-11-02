@@ -1,0 +1,79 @@
+
+/* ==========================================================================
+   ng/components.css — LAYER 2: shared component classes
+   --------------------------------------------------------------------------
+   Reusable across every section (research, publications, timeline, resume…).
+   Structure lives ONCE here. All colors/shape/motion come from tokens.css, so
+   there is NO html.dark block below — dark mode flows through the tokens.
+
+   Reuse in any shortcode: class="ng-card", <span class="ng-tag"> in
+   <div class="ng-tag-row">, class="ng-link-btn", class="ng-card-grid",
+   class="ng-back-link". Then delete that section's duplicated card/tag CSS and
+   its html.dark block.
+   ========================================================================== */
+
+.ng-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.ng-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ng-card-border);
+  border-radius: var(--ng-radius);
+  overflow: hidden;
+  background: var(--ng-card-bg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--ng-transition),
+              box-shadow var(--ng-transition),
+              border-color var(--ng-transition);
+}
+.ng-card:hover {
+  transform: translateY(var(--ng-hover-lift));
+  box-shadow: var(--ng-hover-shadow);
+  border-color: var(--ng-hover-border);
+}
+
+.ng-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.ng-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ng-tag-bg);
+  color: var(--ng-tag-fg);
+}
+
+.ng-link-btn {
+  display: inline-block;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--ng-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--ng-btn-bg);
+  color: var(--ng-btn-fg);
+  transition: background 0.15s ease;
+}
+.ng-link-btn:hover { background: var(--ng-btn-bg-hover); }
+
+.ng-back-link {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ng-divider);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.ng-back-link a {
+  color: var(--ng-accent);
+  text-decoration: none;
+}
