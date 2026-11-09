@@ -10,4 +10,5 @@ links = [
   { github = "https://github.com/nacefguessaymi" },
   { google-scholar = "https://scholar.google.com/citations?user=6fcKKiUAAAAJ&hl=en"},
   { twitter = "https://x.com/NGuessaymi"},
+  { bluesky = "https://bsky.app/profile/nacefguessaymi.bsky.social"}
 ]
