@@ -1,7 +1,31 @@
 [[main]]
   name = "Research"
-  pageRef = "research"
+  pageRef = "Research"
   weight = 10
+
+[[main]]
+  name = "Projects"
+  parent = "Research"
+  pageRef = "projects"
+  weight = 10
+
+[[main]]
+  name = "Publications"
+  parent = "Research"
+  pageRef = "publications"
+  weight = 20
+
+[[main]]
+  name = "Talks"
+  parent = "Research"
+  pageRef = "talks"
+  weight = 30
+
+[[main]]
+  name = "Posters"
+  parent = "Research"
+  pageRef = "posters"
+  weight = 40
 
 [[main]]
   name = "Résumé and CV"
@@ -12,11 +36,6 @@
   name = "Job Search"
   pageRef = "job_search"
   weight = 30
-
-[[main]]
-  name = "Publications"
-  pageRef = "publications"
-  weight = 10
 
 [[main]]
   name = "About Me"
