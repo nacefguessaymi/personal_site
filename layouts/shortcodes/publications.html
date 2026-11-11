@@ -1,6 +1,7 @@
 {{/*
   publications.html — citation cards with toggle-expand abstract + copy-BibTeX.
-  Data-driven from data/publications.toml (range over [[publication]]).
+  Data-driven from data/research/publications.toml (range over [[publication]]).
+  Errors at build time if that data is missing, instead of rendering empty.
   Styling lives in assets/css/ng/publications.css, bundled and loaded by
   layouts/partials/extend-head.html.
 
@@ -10,8 +11,13 @@
   Colors migrated --pub-* -> --ng-* tokens; old html.dark .pubs block deleted.
 */}}
 
+{{ $pubs := hugo.Data.research.publications.publication }}
+{{ if not $pubs }}
+  {{ errorf "publications: no [[publication]] entries in data/research/publications.toml (called from %q)" .Page.File.Path }}
+{{ end }}
+
 <div class="pubs">
-{{ range $i, $p := .Site.Data.publications.publication }}
+{{ range $i, $p := $pubs }}
   <article class="pub-card">
     <div class="pub-top">
       <span class="pub-badge">{{ $p.type }}</span>

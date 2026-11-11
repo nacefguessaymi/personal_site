@@ -1,7 +1,6 @@
 ---
 title: "Research"
-description: "Computational structural biology projects."
-layout: "simple"
+build:
+  list: never
+  render: never
 ---
-
-{{< research-list >}}

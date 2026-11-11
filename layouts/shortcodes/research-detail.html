@@ -1,9 +1,9 @@
 {{/*
   research-detail.html
-  Renders ONE project on its own page, looked up by slug from data/research/<slug>.toml.
+  Renders ONE project on its own page, looked up by slug from data/research/projects/<slug>.toml.
   Usage in content/research/<slug>/index.md:
     {{< research-detail slug="<slug>" >}}
-  The slug arg MUST match a FILENAME in data/research/ (minus .toml). If it doesn't,
+  The slug arg MUST match a FILENAME in data/research/projects/ (minus .toml). If it doesn't,
   the build ERRORS with a clear message (via errorf) instead of rendering blank —
   making the one sync point (folder name vs data filename) fail loudly.
   Styling: shared .ng-* classes (ng/components.css) + .rsx-* (ng/research.css),
@@ -11,10 +11,10 @@
 */}}
 
 {{ $slug := .Get "slug" }}
-{{ $match := index site.Data.research $slug }}
+{{ $match := index hugo.Data.research.projects $slug }}
 
 {{ if not $match }}
-  {{ errorf "research-detail: no project file data/research/%s.toml (called from %q). The content folder name and the data filename must match." $slug .Page.File.Path }}
+  {{ errorf "research-detail: no project file data/research/projects/%s.toml (called from %q). The content folder name and the data filename must match." $slug .Page.File.Path }}
 {{ else }}
 
 <article class="rsx-detail">
@@ -54,7 +54,7 @@
   {{ end }}
 
   <div class="ng-back-link">
-    <a href="{{ "/research/" | relURL }}">&larr; All research</a>
+    <a href="{{ "/research/projects/" | relURL }}">&larr; All projects</a>
   </div>
 </article>
 

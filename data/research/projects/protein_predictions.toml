@@ -3,7 +3,7 @@
 # The data file name, the content folder name, and the slug must all match.
 # weight sets card order on /research/ (lower = first).
 
-title = "Protein Stuctural Predictions"
+title = "Protein Stuctrural Predictions"
 tagline = "Predicting protein structures."   # one-line hook on the card. Empty = hidden.
 weight = 30
 blurb = """

@@ -1,8 +1,8 @@
 {{/*
   research-list.html
-  Renders project cards on /research/ from the data/research/ directory.
-  Each file there (e.g. data/research/amyloids.toml) is one project, exposed by
-  Hugo as site.Data.research.<filename>. The filename IS the slug.
+  Renders project cards on /research/ from the data/research/projects/ directory.
+  Each file there (e.g. data/research/projects/amyloid_dynamics.toml) is one project, exposed by
+  Hugo as hugo.Data.research.projects.<filename>. The filename IS the slug.
   Map iteration order is not guaranteed, so we build a slice and sort by `weight`.
   Cards link to /research/<slug>/ — real pages served by the stub index.md files.
   Styling: shared .ng-* classes (ng/components.css) + .rsx-* (ng/research.css),
@@ -10,7 +10,7 @@
 */}}
 
 {{ $projects := slice }}
-{{ range $slug, $p := site.Data.research }}
+{{ range $slug, $p := hugo.Data.research.projects }}
   {{ $projects = $projects | append (dict
       "slug"     $slug
       "title"    (default $slug $p.title)
@@ -25,10 +25,10 @@
 
 <div class="ng-card-grid">
   {{ range $projects }}
-  <a class="ng-card" href="{{ printf "/research/%s/" .slug | relURL }}">
-    {{ with .image }}
+  <a class="ng-card" href="{{ printf "/research/projects/%s/" .slug | relURL }}">
+    {{ if .image }}
     <div class="rsx-card-media">
-      <img src="{{ . | relURL }}" alt="{{ $.imageAlt }}" loading="lazy" />
+      <img src="{{ .image | relURL }}" alt="{{ .imageAlt }}" loading="lazy" />
     </div>
     {{ end }}
     <div class="rsx-card-body">

@@ -1,0 +1,122 @@
+
+/* ==========================================================================
+   ng/presentations.css — LAYER 3: talks + posters (shared shortcode)
+   --------------------------------------------------------------------------
+   Layout only. Every color comes from tokens.css, so there is NO html.dark
+   block. Pill reuses .ng-tag from components.css.
+
+   LOAD VIA the $files list in layouts/partials/extend-head.html —
+   not @import in custom.css (Blowfish ignores it there).
+   ========================================================================== */
+
+.ng-pres {
+  margin: 2rem 0;
+  border-top: 1px solid var(--ng-divider);
+}
+
+/* date | body            (default)
+   date | body | thumb    (--thumb) */
+.ng-pres-item {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.25rem 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--ng-divider);
+}
+.ng-pres-item--thumb {
+  grid-template-columns: 5.5rem minmax(0, 1fr) 9rem;
+}
+
+.ng-pres-date {
+  padding-top: 0.15rem;               /* sit on the title's first line */
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ng-text-muted);
+}
+
+.ng-pres-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ng-text-strong);
+}
+
+.ng-pres-event,
+.ng-pres-authors {
+  margin: 0 0 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ng-text);
+}
+.ng-pres-authors        { color: var(--ng-text-muted); }
+.ng-pres-authors strong { color: var(--ng-text-strong); font-weight: 700; }
+
+.ng-pres-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 0.6rem;
+}
+
+.ng-pres-link,
+.ng-pres-abstract > summary {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ng-accent);
+  text-decoration: none;
+}
+.ng-pres-link:hover,
+.ng-pres-abstract > summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ng-pres-abstract           { margin-top: 0.6rem; }
+.ng-pres-abstract > summary { width: fit-content; cursor: pointer; }
+.ng-pres-abstract[open] > summary { margin-bottom: 0.5rem; }
+.ng-pres-abstract p {
+  max-width: 70ch;
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ng-text);
+}
+
+.ng-pres-thumb {
+  display: block;
+  align-self: start;
+  overflow: hidden;
+  border: 1px solid var(--ng-card-border);
+  border-radius: var(--ng-radius-sm);
+  background: var(--ng-card-bg-alt);
+}
+.ng-pres-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ng-pres-link:focus-visible,
+.ng-pres-abstract > summary:focus-visible,
+.ng-pres-thumb:focus-visible {
+  outline: 2px solid var(--ng-accent);
+  outline-offset: 3px;
+}
+
+.ng-pres-empty {
+  margin: 0;
+  padding: 1.5rem 0;
+  color: var(--ng-text-muted);
+}
+
+/* stacked: date becomes a small line above the title, thumb drops below */
+@media (max-width: 640px) {
+  .ng-pres-item,
+  .ng-pres-item--thumb { grid-template-columns: minmax(0, 1fr); }
+  .ng-pres-date        { padding-top: 0; }
+  .ng-pres-thumb       { max-width: 16rem; margin-top: 0.75rem; }
+}

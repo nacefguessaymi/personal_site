@@ -6,25 +6,25 @@
 [[main]]
   name = "Projects"
   parent = "Research"
-  pageRef = "projects"
+  pageRef = "research/projects"
   weight = 10
 
 [[main]]
   name = "Publications"
   parent = "Research"
-  pageRef = "publications"
+  pageRef = "research/publications"
   weight = 20
 
 [[main]]
   name = "Talks"
   parent = "Research"
-  pageRef = "talks"
+  pageRef = "research/talks"
   weight = 30
 
 [[main]]
   name = "Posters"
   parent = "Research"
-  pageRef = "posters"
+  pageRef = "research/posters"
   weight = 40
 
 [[main]]
