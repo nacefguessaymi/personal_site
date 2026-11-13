@@ -1,6 +1,9 @@
 # public
 public/
 
+# hugo cache
+resources/_gen/
+
 # Local Netlify folder
 .netlify
 .env
