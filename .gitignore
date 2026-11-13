@@ -3,6 +3,7 @@ public/
 
 # hugo cache
 resources/_gen/
+.hugo_build.lock
 
 # Local Netlify folder
 .netlify
