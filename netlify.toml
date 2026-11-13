@@ -1,5 +1,8 @@
 [build]
-  command = "chmod +x build-resumes.sh && ./build-resumes.sh"
+  command = """
+    curl -fsSL https://pixi.sh/install.sh | sh && \
+    export PATH="$HOME/.pixi/bin:$PATH" && \
+    pixi run --locked build"""
   publish = "public"
 
 [build.environment]
@@ -16,3 +19,6 @@
   command = "hugo server -w --port 1313"
   targetPort = 1313
   publish = "public"
+
+[[plugins]]
+  package = "./plugins/cache"

@@ -1,9 +1,16 @@
+
 {{- /*
   presentations — renders data/<key>.toml as a dated, newest-first list.
   One shortcode serves both pages:
     content/talks/index.md    ->  presentations "talks"
     content/posters/index.md  ->  presentations "posters"
   Data lives at data/research/<key>.toml; schema is at the top of talks.toml.
+
+  Zenodo: an entry with `zenodo = <record id>` gets its thumbnail, web PDF,
+  and DOI from data/zenodo/<record>.json (generated at build time by
+  scripts/zenodo_fetch.py). Hand-written fields always win; Zenodo only
+  fills in what the entry leaves blank (title, date, event, location,
+  authors). Abstracts stay hand-written — Zenodo's description is raw HTML.
 
   Fails the build (rather than rendering an empty page) if the key has no
   matching data file, so a typo'd slug can't ship silently.
@@ -17,28 +24,82 @@
 {{- if not (isset hugo.Data.research $key) -}}
   {{- errorf "presentations: data/research/%s.toml not found or empty (%s)" $key .Position -}}
 {{- end -}}
-{{- $items := sort ((index hugo.Data.research $key).entry | default (slice)) "date" "desc" -}}
+
+{{- /* Pair each entry with its Zenodo record (if any), then sort. Dates are
+       normalised to YYYY-MM-DD strings because TOML gives time.Time and the
+       Zenodo JSON gives a string; mixed types don't sort together. */ -}}
+{{- $zdata := hugo.Data.zenodo | default dict -}}
+{{- $items := slice -}}
+{{- range (index hugo.Data.research $key).entry | default (slice) -}}
+  {{- $z := dict -}}
+  {{- with .zenodo -}}
+    {{- $z = index $zdata (string .) | default dict -}}
+    {{- if not $z -}}
+      {{- warnf "presentations: no data/zenodo/%v.json — run `pixi run zenodo` (falling back to hand-written fields)" . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $date := .date | default $z.date -}}
+  {{- if not $date -}}
+    {{- errorf "presentations: entry %q in data/research/%s.toml has no date" (.title | default "(untitled)") $key -}}
+  {{- end -}}
+  {{- $items = $items | append (dict "e" . "z" $z "date" (time.Format "2006-01-02" $date)) -}}
+{{- end -}}
+{{- $items = sort $items "date" "desc" -}}
 
 <div class="ng-pres not-prose">
 {{- range $items }}
-  {{- $e := . }}
-  <article class="ng-pres-item{{ if $e.thumb }} ng-pres-item--thumb{{ end }}">
-    <time class="ng-pres-date" datetime="{{ time.Format "2006-01-02" $e.date }}">{{ time.Format "Jan 2006" $e.date }}</time>
+  {{- $e := .e }}
+  {{- $z := .z }}
+  {{- $m := $z.meeting | default dict }}
+  {{- $title := $e.title | default $z.title }}
+  {{- $event := $e.event | default $m.title }}
+  {{- $location := $e.location | default $m.place }}
+
+  {{- /* Authors: hand-written string, else Zenodo creators + contributors
+         reformatted "Last, First" -> "Last F." to match the house style. */}}
+  {{- $authors := $e.authors }}
+  {{- if and (not $authors) $z }}
+    {{- $names := slice }}
+    {{- range $z.creators }}{{ $names = $names | append . }}{{ end }}
+    {{- range $z.contributors }}{{ $names = $names | append .name }}{{ end }}
+    {{- $short := slice }}
+    {{- range $names }}
+      {{- $p := split . ", " }}
+      {{- if eq (len $p) 2 }}
+        {{- $short = $short | append (printf "%s %s." (index $p 0) (substr (index $p 1) 0 1)) }}
+      {{- else }}
+        {{- $short = $short | append . }}
+      {{- end }}
+    {{- end }}
+    {{- $authors = delimit $short ", " }}
+  {{- end }}
+
+  {{- $hasThumb := or $e.thumb $z.thumb }}
+  <article class="ng-pres-item{{ if $hasThumb }} ng-pres-item--thumb{{ end }}">
+    <time class="ng-pres-date" datetime="{{ .date }}">{{ time.Format "Jan 2006" .date }}</time>
 
     <div class="ng-pres-body">
-      <h2 class="ng-pres-title">{{ $e.title }}</h2>
-      <p class="ng-pres-event">{{ $e.event }}{{ with $e.location }}, {{ . }}{{ end }}</p>
-      {{- with $e.authors }}
+      <h2 class="ng-pres-title">{{ $title }}</h2>
+      {{- if $event }}
+      <p class="ng-pres-event">{{ $event }}{{ with $location }}, {{ . }}{{ end }}</p>
+      {{- end }}
+      {{- with $authors }}
       <p class="ng-pres-authors">{{ replace (htmlEscape .) "Guessaymi N." "<strong>Guessaymi N.</strong>" | safeHTML }}</p>
       {{- end }}
 
-      {{- if or $e.kind $e.links }}
+      {{- if or $e.kind $e.links $z }}
       <div class="ng-pres-meta">
         {{- with $e.kind }}
         <span class="ng-tag">{{ . }}</span>
         {{- end }}
         {{- range $e.links }}
         <a class="ng-pres-link" href="{{ .url }}" target="_blank" rel="noopener">{{ .label }}</a>
+        {{- end }}
+        {{- with $z.pdf }}
+        <a class="ng-pres-link" href="{{ . }}" target="_blank" rel="noopener">{{ cond (eq $key "posters") "Poster" "Slides" }}</a>
+        {{- end }}
+        {{- with $z.doi }}
+        <a class="ng-pres-link" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI</a>
         {{- end }}
       </div>
       {{- end }}
@@ -51,14 +112,20 @@
       {{- end }}
     </div>
 
-    {{- with $e.thumb }}
-      {{- with resources.Get . }}
-        {{- $t := .Fit "480x480 webp" }}
-    <a class="ng-pres-thumb" href="{{ .RelPermalink }}" target="_blank" rel="noopener">
-      <img src="{{ $t.RelPermalink }}" width="{{ $t.Width }}" height="{{ $t.Height }}" alt="Preview of {{ $e.title }}" loading="lazy">
+    {{- if $z.thumb }}
+    <a class="ng-pres-thumb" href="{{ $z.pdf }}" target="_blank" rel="noopener">
+      <img class="nozoom" src="{{ $z.thumb }}" width="{{ $z.thumb_width }}" height="{{ $z.thumb_height }}" alt="Preview of {{ $title }}" loading="lazy" decoding="async">
     </a>
-      {{- else }}
-        {{- errorf "presentations: thumb %q not found under assets/" . }}
+    {{- else }}
+      {{- with $e.thumb }}
+        {{- with resources.Get . }}
+          {{- $t := .Fit "480x480 webp" }}
+    <a class="ng-pres-thumb" href="{{ .RelPermalink }}" target="_blank" rel="noopener">
+      <img class="nozoom" src="{{ $t.RelPermalink }}" width="{{ $t.Width }}" height="{{ $t.Height }}" alt="Preview of {{ $title }}" loading="lazy">
+    </a>
+        {{- else }}
+          {{- errorf "presentations: thumb %q not found under assets/" . }}
+        {{- end }}
       {{- end }}
     {{- end }}
   </article>

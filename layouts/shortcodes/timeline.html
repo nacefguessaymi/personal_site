@@ -20,13 +20,13 @@
 
   <div class="tl-grid">
     <aside class="tl-aside" aria-hidden="true">
-      <div class="tl-marker-year" id="tl-marker-year">{{ with index .Site.Data.timeline.entry 0 }}{{ .year }}{{ end }}</div>
-      <div class="tl-marker-tag" id="tl-marker-tag">{{ with index .Site.Data.timeline.entry 0 }}{{ .tag }}{{ end }}</div>
+      <div class="tl-marker-year" id="tl-marker-year">{{ with index hugo.Data.timeline.entry 0 }}{{ .year }}{{ end }}</div>
+      <div class="tl-marker-tag" id="tl-marker-tag">{{ with index hugo.Data.timeline.entry 0 }}{{ .tag }}{{ end }}</div>
       <div class="tl-progress"><div class="tl-progress-fill" id="tl-progress-fill"></div></div>
     </aside>
 
     <div class="tl-track">
-      {{ range $i, $e := .Site.Data.timeline.entry }}
+      {{ range $i, $e := hugo.Data.timeline.entry }}
       <div class="tl-entry{{ if eq $i 0 }} tl-active{{ end }}" data-year="{{ $e.year }}" data-tag="{{ $e.tag }}" data-index="{{ $i }}">
         <div class="tl-card">
           <div class="tl-year-inline">{{ $e.year }}</div>

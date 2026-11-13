@@ -1,0 +1,17 @@
+[workspace]
+name = "personal_site"
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64"]
+
+[dependencies]
+python = "3.12.*"
+ghostscript = "*"
+pillow = "*"
+pypdfium2 = "*"
+typst = ">=0.15.1,<0.16"
+font-otf-fontawesome = ">=7.3.1,<8"
+
+[tasks]
+resumes = "bash scripts/build-resumes.sh"
+zenodo  = "python scripts/zenodo_fetch.py"
+build   = { cmd = "hugo --gc --minify", depends-on = ["resumes", "zenodo"] }

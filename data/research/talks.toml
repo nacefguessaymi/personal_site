@@ -21,6 +21,7 @@
 [[entry]]
 title    = "Structure-Based Drug-Design of Small Molecule Inhibitors for Functional Amyloids"
 date     = 2026-11-05
+zenodo   = 24122662
 event    = "Rust Belt Microbiome Conference"
 location = "Pittsburgh, PA"
 kind     = "Rapid-fire"
@@ -28,17 +29,12 @@ authors  = "Guessaymi N., Byeon C.-H., Akbey Ü., Durrant J.D."
 abstract = """
 Bacterial biofilms are a leading cause of chronic and device-associated microbial infections; mediating antibiotic resistance and marked immune tolerance. Amongst the ESKAPE pathogens, *Staphylococcus aureus* is a principal biofilm-forming, antimicrobial-resistant species. A key structural scaffold of the *S. aureus* matrix is PSMα1, a 21-residue phenol soluble functional amyloid (FA) peptide that self assembles into biofilm-stabilizing amyloid fibrils. We utilized a recent PSMα1 fibril CryoEM structure to perform a structure-based virtual screen to identify novel small-molecule fibrilization inhibitors. We applied a novel methodological pipeline that used binding hotspot identification, pharmacophore-guided library expansion, and iterative molecular docking to identify candidate fibrilization inhibitors. The top 40 candidates were validated experimentally using fibrilization and biofilm assays as well as electron microscopy. Here we present four compounds that completely inhibit PSMα1 fibril formation and dismantle preformed mature fibrils. Surprisingly, these compounds are also active against other proteins in the PSM family, FapC a FA in *Pseudomonas aeruginosa* and others. By disrupting the functional amyloid scaffolding shared across bacterial species, these compounds offer a promising, FA directed approach to disrupt biofilms where conventional antibiotics are not effective.
 """
-links    = [
-  { label = "Slides", url = "https://doi.org/10.5281/zenodo.24122662" },
-]
 
 [[entry]]
 title    = "Computer-Aided Drug Design of S. Aureus Functional Fibril Inhibitors"
 date     = 2026-05-07
+zenodo   = 24122616
 event    = "MBSB Symposium"
 location = "Pittsburgh, PA"
-kind     = "Contributed"
+kind     = "Invited"
 authors  = "Guessaymi N., Byeon C.-H., Maldonado A., Durrant J.D., Akbey Ü."
-links    = [
-  { label = "Slides", url = "https://doi.org/10.5281/zenodo.24122616" },
-]
