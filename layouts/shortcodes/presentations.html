@@ -1,3 +1,4 @@
+
 {{- /*
   presentations — renders data/<key>.toml as a dated, newest-first list.
   One shortcode serves both pages:
@@ -113,14 +114,14 @@
 
     {{- if $z.thumb }}
     <a class="ng-pres-thumb" href="{{ $z.pdf }}" target="_blank" rel="noopener">
-      <img src="{{ $z.thumb }}" width="{{ $z.thumb_width }}" height="{{ $z.thumb_height }}" alt="Preview of {{ $title }}" loading="lazy" decoding="async">
+      <img class="nozoom" src="{{ $z.thumb }}" width="{{ $z.thumb_width }}" height="{{ $z.thumb_height }}" alt="Preview of {{ $title }}" loading="lazy" decoding="async">
     </a>
     {{- else }}
       {{- with $e.thumb }}
         {{- with resources.Get . }}
           {{- $t := .Fit "480x480 webp" }}
     <a class="ng-pres-thumb" href="{{ .RelPermalink }}" target="_blank" rel="noopener">
-      <img src="{{ $t.RelPermalink }}" width="{{ $t.Width }}" height="{{ $t.Height }}" alt="Preview of {{ $title }}" loading="lazy">
+      <img class="nozoom" src="{{ $t.RelPermalink }}" width="{{ $t.Width }}" height="{{ $t.Height }}" alt="Preview of {{ $title }}" loading="lazy">
     </a>
         {{- else }}
           {{- errorf "presentations: thumb %q not found under assets/" . }}
