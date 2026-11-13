@@ -2,10 +2,12 @@
 """
 Build-time Zenodo pipeline for posters and talks.
 
-Input:  data/talks/<slug>.toml      (committed, you write these)
-Output: static/zenodo/<slug>/thumb.webp
-        static/zenodo/<slug>/web.pdf
-        data/zenodo/<slug>.json      (generated metadata for Hugo templates)
+Input:  any [[entry]] in data/research/talks.toml or posters.toml that has
+        a `zenodo = <record id>` field (optional `zenodo_file = "..."` if
+        the record holds more than one PDF).
+Output: static/zenodo/<record>/thumb.webp
+        static/zenodo/<record>/web.pdf
+        data/zenodo/<record>.json    (generated; read as hugo.Data.zenodo)
 
 Derivatives are cached by the source file's MD5 in CACHE_DIR, so each
 original is downloaded only when it changes on Zenodo.
@@ -27,7 +29,7 @@ import pypdfium2 as pdfium
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-INPUT_DIR = ROOT / "data" / "talks"
+INPUT_FILES = [ROOT / "data" / "research" / n for n in ("talks.toml", "posters.toml")]
 STATIC_OUT = ROOT / "static" / "zenodo"
 DATA_OUT = ROOT / "data" / "zenodo"
 CACHE_DIR = ROOT / ".zenodo-cache"
@@ -207,14 +209,21 @@ def process(slug, cfg):
 def main():
     if not shutil.which("gs"):
         raise SystemExit("Ghostscript (gs) not found on PATH")
-    configs = sorted(INPUT_DIR.glob("*.toml"))
-    if not configs:
-        log(f"no inputs in {INPUT_DIR}")
-        return
-    for path in configs:
+    jobs = {}
+    for path in INPUT_FILES:
+        if not path.exists():
+            continue
         with open(path, "rb") as f:
-            process(path.stem, tomllib.load(f))
-    log(f"done: {len(configs)} item(s)")
+            for e in tomllib.load(f).get("entry", []):
+                if "zenodo" in e:
+                    rec = int(e["zenodo"])
+                    jobs[rec] = {"record": rec, "file": e.get("zenodo_file")}
+    if not jobs:
+        log("no entries with a `zenodo` field")
+        return
+    for rec, cfg in jobs.items():
+        process(str(rec), cfg)
+    log(f"done: {len(jobs)} item(s)")
 
 
 if __name__ == "__main__":
