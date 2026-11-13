@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+mkdir -p static/files
+
 # Compile both CVs. --root lets the compiler resolve local imports.
 echo "Compiling academic CV..."
 typst compile --root external/resume \
