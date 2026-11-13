@@ -10,4 +10,14 @@ public/
 
 #static files
 /static/files/*.pdf
-/bin/
+
+# Remote Netlify
+.zenodo-cache/
+static/zenodo/
+data/zenodo/
+
+# pixi
+.pixi/
+
+#npm
+nodue_modules/
