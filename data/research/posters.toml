@@ -16,9 +16,6 @@ authors  = "Guessaymi N., Byeon C.-H., Maldonado A., Akbey Ü., Durrant J.D."
 abstract = """
 Bacterial biofilms are a leading cause of chronic and device-associated microbial infections; mediating antibiotic resistance and marked immune tolerance. Amongst the ESKAPE pathogens, *Staphylococcus aureus* is a principal biofilm-forming, antimicrobial-resistant species. A key structural scaffold of the *S. aureus* matrix is PSMα1, a 21-residue phenol soluble functional amyloid (FA) peptide that self assembles into biofilm-stabilizing amyloid fibrils. We utilized a recent PSMα1 fibril CryoEM structure to perform a structure-based virtual screen to identify novel small-molecule fibrilization inhibitors. We applied a novel methodological pipeline that used binding hotspot identification, pharmacophore-guided library expansion, and iterative molecular docking to identify candidate fibrilization inhibitors. The top 40 candidates were validated experimentally using fibrilization and biofilm assays as well as electron microscopy. Here we present four compounds that completely inhibit PSMα1 fibril formation and dismantle preformed mature fibrils. Surprisingly, these compounds are also active against other proteins in the PSM family, FapC a FA in *Pseudomonas aeruginosa* and others. By disrupting the functional amyloid scaffolding shared across bacterial species, these compounds offer a promising, FA directed approach to disrupt biofilms where conventional antibiotics are not effective.
 """
-links    = [
-  { label = "Poster", url = "https://doi.org/10.5281/zenodo.24122781" },
-]
 
 [[entry]]
 title    = "Structure Based Drug Design Targeting Biofilm Forming S. aureus"
@@ -30,9 +27,6 @@ authors  = "Guessaymi N., Maldonado A., Akbey Ü., Durrant J.D."
 abstract = """
 *Staphylococcus aureus* remains a critical public health concern due to its prevalence in hospital settings and the rise of antibiotic-resistant strains. Treatment challenges stem not only from conferred resistance but also from the bacterium’s ability to form robust biofilms, which enhance resistance and shield from both host immunity and antibiotic therapies. A key driver of biofilm formation is the peptide PSMα1, which self-assembles into functional amyloid fibrils that reinforce the biofilm matrix. In 2024, the fibril structure of PSMα1 was solved, enabling structure-based drug design against biofilm forming strains of *S. aureus*. Here we report preliminary computational efforts to identify ligands targeting PSMα1 fibrils. We performed an initial virtual drug screen by docking a 5,000-compound diversity set into the PDB-deposited structure. The top hits from this screen were used to seed a pharmacophore search of the MolPort database, which contains commercially available compounds. We selected the most similar compounds to the initial hits identified in the pharmacophore search and re-docked these compounds to the fibril structure. We then ranked the candidates based on predicted binding strength to prioritize those with the highest potential for disrupting fibril formation.
 """
-links    = [
-  { label = "Poster", url = "https://doi.org/10.5281/zenodo.24121320" },
-]
 
 [[entry]]
 title    = "Mapping intrinsically disordered proteins in live cells by high-speed super-resolution light microscopy"
@@ -45,7 +39,7 @@ abstract = """
 We tracked single disordered proteins inside nuclear pore complexes in live HeLa cells and reconstructed their positions in 3D using virtual super-resolution microscopy. These proteins move constantly and occupy a space smaller than the diffraction limit, so fixed-sample methods like EM capture only one frozen arrangement. Following them in living cells instead reveals how their motion is confined and where they most likely sit within the pore, which bears directly on how cargo passes through it.
 """
 links    = [
-  { label = "Biophys. J.", url = "https://www.cell.com/biophysj/fulltext/S0006-3495(23)01200-6" },
+  { label = "DOI", url = "https://www.cell.com/biophysj/fulltext/S0006-3495(23)01200-6" },
 ]
 
 
@@ -59,9 +53,6 @@ authors  = "Guessaymi N., Jain V., Malekoshoaraie M.H., Sarna K., Reddy J., Cham
 abstract = """
 Optogenetics has proven to be a powerful research tool to dissect neural circuits and has found direct and indirect clinical applications through improving electrical stimulation strategies in neuro-pathophysiologies. Developing strategies for high-resolution light delivery in a minimally-invasive way using fully flexible, ultracompact photonic devices into the brain tissue is crucial to take optogenetics to the next level and unlock its potential for interfacing with the brain tissue at the cellular level. Recently, flexible photonic waveguide implants for light delivery have been developed based on flexible polymer materials. While the flexibility of these materials is helpful to reduce the tissue response, the implantation of such neural probes is challenging. Currently, strategies to insert these probes rely on using shuttles or bracing the probes with biocompatible stiffeners. Our group has developed a novel Parylene photonic waveguide array neural probe platform for high-resolution light delivery called Parylene photonics. It is fabricated from *flexible* and *biocompatible* materials Parylene C and PDMS, which have a Young’s Modulus orders of magnitude below other rigid substrates. We have previously shown the ability to deliver light into tissue using an array of these waveguides for targeted optogenetic stimulation. In this work we aim to show the biological effects of implantation and chronic use of these neural probes *in vivo*. We use histological markers GFAP and Nissl staining to assess the structural and inflammatory damage *in vivo* in an acute setting and also post-survival surgery. We additionally measure mN range forces applied on the tissue by inserting these probes using three implantation techniques 1. Shuttle insertion using PEG to laminate the neural probes 2. Retraction of the rigid shuttle after implantation 3. Insertion and retraction using a custom fabricated micropipette.
 """
-links    = [
-  { label = "Poster", url = "https://doi.org/10.5281/zenodo.24123079" },
-]
 
 [[entry]]
 title    = "Complete 3D mapping of FG domains for all eleven FG-Nups in living cell NPCs using super-resolution microscopy"

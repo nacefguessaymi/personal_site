@@ -123,6 +123,7 @@ def make_web_pdf(src, out_path):
             "gs",
             "-sDEVICE=pdfwrite",
             f"-dPDFSETTINGS={GS_PRESET}",
+            "-sColorConversionStrategy=RGB",
             "-dNOPAUSE",
             "-dBATCH",
             "-dQUIET",

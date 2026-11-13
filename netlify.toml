@@ -2,9 +2,7 @@
   command = """
     curl -fsSL https://pixi.sh/install.sh | sh && \
     export PATH="$HOME/.pixi/bin:$PATH" && \
-    pixi run --locked zenodo && \
-    chmod +x scripts/build-resumes.sh && \
-    ./scripts/build-resumes.sh """
+    pixi run --locked build"""
   publish = "public"
 
 [build.environment]
@@ -12,7 +10,6 @@
   HUGO_ENABLEGIT = "true"
   GO_VERSION = "1.21"
   GIT_LFS_ENABLED = "false"
-  PYTHON_VERSION = "3.12"
 
 [functions]
   directory = "netlify/functions"
