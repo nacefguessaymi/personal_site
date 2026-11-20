@@ -13,5 +13,5 @@ typst compile --root external/resume \
 echo "Compiling industry resume..."
 typst compile --root external/resume \
 	--font-path "$CONDA_PREFIX"/fonts \
-	external/resume/basic-resume/main.typ \
+	external/resume/basic-resume/nacef_resume.typ \
 	static/files/resume.pdf
