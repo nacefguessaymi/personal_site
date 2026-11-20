@@ -7,11 +7,11 @@ mkdir -p static/files
 echo "Compiling academic CV..."
 typst compile --root external/resume \
 	--font-path "$CONDA_PREFIX"/fonts \
-	external/resume/rendercv/main.typ \
-	static/files/cv.pdf
+	external/resume/rendercv/nacef_cv.typ \
+	static/files/nacef_cv.pdf
 
 echo "Compiling industry resume..."
 typst compile --root external/resume \
 	--font-path "$CONDA_PREFIX"/fonts \
 	external/resume/basic-resume/nacef_resume.typ \
-	static/files/resume.pdf
+	static/files/nacef_resume.pdf
